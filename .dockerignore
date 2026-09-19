@@ -13,7 +13,8 @@ coverage
 !.env.example
 *.log
 .DS_Store
-.openai
+.openai/*
+!.openai/hosting.json
 .agents
 .codex
 outputs
