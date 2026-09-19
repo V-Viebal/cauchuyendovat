@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ArrowUpRight, ChevronRight, Layers3, MapPin, Sparkles, Users } from "lucide-react";
+import { ArrowUpRight, Box, ChevronRight, Factory, MapPin, Users, UsersRound } from "lucide-react";
 import { MonosFrame } from "../components/monos-shell";
 
 export const metadata: Metadata = {
@@ -10,30 +10,39 @@ export const metadata: Metadata = {
 const networkCards = [
   {
     title: "Designer",
-    count: "24 hồ sơ",
+    count: "4 hồ sơ",
     copy: "Những người biến ý tưởng thành hình dáng có thể sống cùng.",
-    icon: Sparkles,
+    icon: UsersRound,
     tone: "network-green",
     href: "/designers",
-    link: "Xem hồ sơ",
+    link: "Mở danh bạ",
   },
   {
-    title: "Material",
-    count: "18 nhóm",
-    copy: "Vật liệu, kỹ thuật và những dấu vết tạo nên tính cách của đồ vật.",
-    icon: Layers3,
+    title: "Đồ vật",
+    count: "3 hồ sơ",
+    copy: "Những món đồ có hồ sơ về hình dáng, vật liệu, nguồn gốc và đời sống.",
+    icon: Box,
     tone: "network-yellow",
-    href: "/stories#material-remembers",
-    link: "Mở archive",
+    href: "/objects",
+    link: "Mở danh bạ",
   },
   {
-    title: "Place",
-    count: "12 không gian",
+    title: "Nhà máy",
+    count: "3 hồ sơ",
+    copy: "Năng lực sản xuất, vật liệu và công đoạn đưa bản vẽ thành sản phẩm thật.",
+    icon: Factory,
+    tone: "network-blue",
+    href: "/factories",
+    link: "Mở danh bạ",
+  },
+  {
+    title: "Không gian",
+    count: "3 hồ sơ",
     copy: "Furniture trong những không gian thật, sau khi rời khỏi catalogue.",
     icon: MapPin,
-    tone: "network-blue",
+    tone: "network-green",
     href: "/spaces",
-    link: "Xem không gian",
+    link: "Mở danh bạ",
   },
 ];
 

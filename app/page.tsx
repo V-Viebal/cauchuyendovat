@@ -337,7 +337,7 @@ export default function Home() {
         </a>
 
         <nav className={`main-nav ${mobileMenuOpen ? "is-open" : ""}`} aria-label="Điều hướng chính">
-          <a className="nav-link active" href="/stories" onClick={() => setMobileMenuOpen(false)}>
+          <a className="nav-link" href="/stories" onClick={() => setMobileMenuOpen(false)}>
             Câu chuyện đồ vật
           </a>
           <a className="nav-link" href="/feed" onClick={() => setMobileMenuOpen(false)}>
@@ -382,7 +382,7 @@ export default function Home() {
         <span className="ticker-dot" />
         <span>Vol. 01 / Đồ vật là trung tâm</span>
         <span className="ticker-line" />
-        <span className="ticker-muted">Tạp chí · Lưu trữ · Mạng lưới</span>
+        <span className="ticker-muted">Câu chuyện đồ vật · Lưu trữ · Mạng lưới</span>
       </div>
 
       <FeedStrip />
@@ -417,7 +417,7 @@ export default function Home() {
         <div className="hero-image-wrap">
           <div className="hero-image-frame">
             <img
-              src="/monos-chair-study.png"
+              src="/cloudy-profile-photo.jpg"
               alt="Nghiên cứu hình khối của một chiếc ghế lounge bọc vải"
               className="hero-image"
             />
@@ -447,78 +447,6 @@ export default function Home() {
           chốn, một hành trình — và có thể còn nhiều câu chuyện chưa được kể.
         </p>
         <div className="manifesto-mark" aria-hidden="true">↗</div>
-      </section>
-
-      <section className="stories-section section-pad" id="stories">
-        <div className="section-heading">
-          <div>
-            <div className="eyebrow muted"><Compass size={14} /> Explore the archive</div>
-            <h2>Những câu chuyện<br /><em>đang mở.</em></h2>
-          </div>
-          <p className="section-aside-copy">Tạp chí là cửa vào. Object Profile là điểm nối. Mạng lưới là nơi câu chuyện tiếp tục sống.</p>
-        </div>
-
-        <div className="filter-bar" role="tablist" aria-label="Lọc nội dung">
-          {filters.map((filter) => (
-            <button
-              className={`filter-chip ${activeFilter === filter.value ? "is-active" : ""}`}
-              key={filter.value}
-              type="button"
-              role="tab"
-              aria-selected={activeFilter === filter.value}
-              onClick={() => setActiveFilter(filter.value)}
-            >
-              {filter.label}
-            </button>
-          ))}
-        </div>
-
-        <div className="story-grid">
-          {visibleStories.map((story, index) => {
-            const saved = savedStories.includes(story.id);
-            return (
-              <article className={`story-card story-${index + 1} accent-${story.accent}`} key={story.id}>
-                <div className="story-visual">
-                  {story.image ? (
-                    <img src="/monos-chair-study.png" alt="Nghiên cứu hình khối Cloudy" />
-                  ) : (
-                    <div className="abstract-visual" aria-hidden="true">
-                      <span className="abstract-orb" />
-                      <span className="abstract-line" />
-                      <span className="abstract-word">MONOS</span>
-                    </div>
-                  )}
-                  <span className="story-number">{story.number}</span>
-                  <span className="story-category">{story.category}</span>
-                  <button
-                    className="story-eye"
-                    type="button"
-                    aria-label={`Xem ${story.title}`}
-                    onClick={() => story.id === "cloudy" && setProfileOpen(true)}
-                  >
-                    <Eye size={17} strokeWidth={1.8} />
-                  </button>
-                </div>
-                <div className="story-body">
-                  <div className="story-meta"><span>{story.tag}</span><span>{story.readTime}</span></div>
-                  <h3>{story.title}</h3>
-                  <p>{story.excerpt}</p>
-                  <div className="story-footer">
-                    <span className="story-author">{story.author}</span>
-                    <SaveButton saved={saved} onClick={() => toggleSaved(story.id)} />
-                  </div>
-                </div>
-              </article>
-            );
-          })}
-        </div>
-
-        {visibleStories.length === 0 && (
-          <div className="empty-state">
-            <Sparkles size={18} />
-            <span>Chưa có câu chuyện trong bộ lọc này. Archive đang được mở rộng.</span>
-          </div>
-        )}
       </section>
 
       <section className="profile-section section-pad" id="object-profile">
@@ -747,7 +675,7 @@ export default function Home() {
               <div><span className="panel-kicker">Object Profile / 001</span><h2 id="profile-panel-title">Cloudy.</h2></div>
               <button className="panel-close" type="button" aria-label="Đóng hồ sơ" onClick={() => setProfileOpen(false)}><X size={20} /></button>
             </div>
-            <img className="panel-image" src="/monos-chair-study.png" alt="Nghiên cứu hình khối chiếc ghế Cloudy" />
+            <img className="panel-image" src="/cloudy-profile-photo.jpg" alt="Cloudy — ghế lounge bọc vải" />
             <div className="panel-image-note">Visual study / Không phải ảnh sản phẩm</div>
             <p className="panel-lede">Một hồ sơ sống được tạo từ câu chuyện thiết kế, dữ liệu nguồn gốc và những người đã sử dụng món đồ.</p>
             <div className="panel-facts">

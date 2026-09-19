@@ -43,6 +43,17 @@ export default function ObjectDirectory() {
       <div className="object-grid">
         {visibleObjects.map((object) => (
           <article className={`object-card object-card-${object.tone}`} key={object.id}>
+            <div className={`object-thumbnail ${object.thumbnail ? "has-image" : "is-pending"}`}>
+              {object.thumbnail ? (
+                <img src={object.thumbnail} alt={object.thumbnailAlt} loading="lazy" />
+              ) : (
+                <div className="object-thumbnail-pending">
+                  <Box size={26} strokeWidth={1.4} />
+                  <span>{object.thumbnailLabel}</span>
+                </div>
+              )}
+              {object.thumbnail && <span>{object.thumbnailLabel}</span>}
+            </div>
             <div className="object-card-head">
               <div className="object-icon"><Box size={20} strokeWidth={1.7} /></div>
               <span className="object-status"><span /> {object.status}</span>

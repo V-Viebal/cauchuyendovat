@@ -1,6 +1,7 @@
 "use client";
 
 import { Activity, ArrowUpRight, Menu, X } from "lucide-react";
+import Link from "next/link";
 import { useState, type ReactNode } from "react";
 import { feedItems } from "../monos-data";
 
@@ -44,10 +45,10 @@ export function MonosHeader({ active }: { active?: ActivePage }) {
 
   return (
     <header className="site-header">
-      <a className="brand" href="/" aria-label="Monos, về trang chủ">
+      <Link className="brand" href="/" aria-label="Monos, về trang chủ">
         <LogoMark />
         <span className="brand-word">MONOS</span>
-      </a>
+      </Link>
 
       <nav className={`main-nav ${mobileMenuOpen ? "is-open" : ""}`} aria-label="Điều hướng chính">
         {navItems.map((item) => {
@@ -97,9 +98,9 @@ export function MonosHeader({ active }: { active?: ActivePage }) {
         <a className="icon-button search-trigger" href="/feed" aria-label="Mở Monos Feed">
           <Activity size={18} strokeWidth={1.8} />
         </a>
-        <a className="submit-button header-submit" href="/#submit">
+        <Link className="submit-button header-submit" href="/#submit">
           Gửi một đồ vật <ArrowUpRight size={16} strokeWidth={1.8} />
-        </a>
+        </Link>
         <button
           className="icon-button menu-trigger"
           type="button"
@@ -123,13 +124,15 @@ export function FeedStrip({ compact = false }: { compact?: boolean }) {
         <ArrowUpRight size={14} />
       </a>
       <div className="feed-strip-items">
-        {feedItems.map((item) => (
-          <a className="feed-strip-item" href={`/feed#${item.id}`} key={item.id}>
-            <span>{item.type}</span>
-            <strong>{item.title}</strong>
-            <small>{item.time}</small>
-          </a>
-        ))}
+        <div className="feed-strip-track">
+          {[...feedItems, ...feedItems].map((item, index) => (
+            <a className="feed-strip-item" href={`/feed#${item.id}`} key={`${item.id}-${index}`}>
+              <span>{item.type}</span>
+              <strong>{item.title}</strong>
+              <small>{item.time}</small>
+            </a>
+          ))}
+        </div>
       </div>
       <a className="feed-strip-open" href="/feed">
         Mở feed <ArrowUpRight size={14} />
@@ -141,10 +144,10 @@ export function FeedStrip({ compact = false }: { compact?: boolean }) {
 export function MonosFooter() {
   return (
     <footer className="site-footer">
-      <a className="footer-brand" href="/">
+      <Link className="footer-brand" href="/">
         <LogoMark />
         <span>MONOS</span>
-      </a>
+      </Link>
       <p>Stories of the things we live with.</p>
       <div className="footer-links">
         {navItems.flatMap((item) => [item, ...(item.children ?? [])]).map((item) => (

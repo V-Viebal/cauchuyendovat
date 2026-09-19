@@ -36,6 +36,13 @@ export default function SpaceDirectory() {
           const Icon = space.icon === "home" ? Home : space.icon === "hospitality" ? Building2 : UsersRound;
           return (
             <article className={`space-card space-card-${space.tone}`} id={space.id} key={space.id}>
+              <div className={`space-thumbnail ${space.thumbnail ? "has-image" : "is-pending"}`}>
+                {space.thumbnail ? (
+                  <img src={space.thumbnail} alt={space.thumbnailAlt} loading="lazy" />
+                ) : (
+                  <span>Ảnh không gian đang chờ bổ sung</span>
+                )}
+              </div>
               <div className="space-card-head">
                 <div className="space-avatar"><Icon size={22} strokeWidth={1.6} /></div>
                 <span className="space-status"><span /> {space.status}</span>
@@ -46,6 +53,17 @@ export default function SpaceDirectory() {
               <p>{space.story}</p>
               <div className="space-tags">
                 {space.specialties.map((specialty) => <span key={specialty}>{specialty}</span>)}
+              </div>
+              <div className="space-related">
+                <span className="space-related-label">Đồ vật trong không gian</span>
+                <div className="space-related-list">
+                  {space.relatedObjects.map((object) => (
+                    <div className={`space-object-thumb ${object.thumbnail ? "has-image" : "is-pending"}`} key={object.name}>
+                      {object.thumbnail ? <img src={object.thumbnail} alt={object.name} loading="lazy" /> : <span />}
+                      <div><strong>{object.name}</strong><small>{object.type}</small></div>
+                    </div>
+                  ))}
+                </div>
               </div>
               <a className="card-link" href="/objects">Xem đồ vật liên quan <ArrowUpRight size={15} /></a>
             </article>

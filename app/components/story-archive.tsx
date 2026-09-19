@@ -1,99 +1,136 @@
-"use client";
+import {
+  ArrowUpRight,
+  BookOpenText,
+  Factory,
+  Home,
+  Layers3,
+  PencilRuler,
+  ShieldCheck,
+  Waypoints,
+} from "lucide-react";
 
-import { Bookmark, ChevronRight, Eye, Sparkles } from "lucide-react";
-import { useState } from "react";
-import { stories, storyFilters } from "../monos-data";
+const cloudyLayers = [
+  {
+    number: "01",
+    title: "Object Story",
+    subtitle: "Món đồ là nhân vật",
+    icon: BookOpenText,
+    state: "Thông tin do brand cung cấp",
+    body: "Cloudy là một lounge chair của B+ Furniture, mã LC060. Hình dáng được phát triển từ cảm giác mềm, nhẹ và được ôm lấy; các múi đệm ngang tạo nhịp như một đám mây đang trôi, còn khung chân mảnh giữ cho chiếc ghế không trở nên nặng nề.",
+    note: "Câu chuyện hiện được đối chiếu từ trang sản phẩm B+. Chưa có lời kể độc lập từ người thiết kế.",
+  },
+  {
+    number: "02",
+    title: "Designer",
+    subtitle: "Người đứng sau",
+    icon: PencilRuler,
+    state: "Chưa xác minh",
+    body: "Hồ sơ nguồn hiện chưa công bố tên designer, các bản vẽ đầu tiên, số vòng prototype hay những phương án đã bị loại. Lớp này được giữ mở để bổ sung người vẽ, người thử mẫu và các quyết định giúp Cloudy đi vào sản xuất.",
+    note: "Không gán tác giả khi chưa có tài liệu hoặc xác nhận trực tiếp.",
+  },
+  {
+    number: "03",
+    title: "How it’s made",
+    subtitle: "Từ prototype đến xưởng",
+    icon: Factory,
+    state: "Brand cung cấp · Chờ dữ liệu xưởng",
+    body: "Dữ liệu kỹ thuật cho biết ghế dùng khung gỗ tự nhiên đã xử lý, đệm polyurethane tỷ trọng D35–50 bọc fiber, vải contract-grade và chân thép sơn tĩnh điện. Trình tự làm mẫu, cấu tạo khớp, kỹ thuật bọc và đơn vị hoàn thiện vẫn chưa có bằng chứng công khai.",
+    note: "Những gì thuộc thông số được ghi nhận; những gì thuộc quy trình xưởng vẫn là khoảng trống.",
+  },
+  {
+    number: "04",
+    title: "Vật liệu",
+    subtitle: "Chọn gì, vì sao",
+    icon: Layers3,
+    state: "Thông tin do brand cung cấp",
+    body: "Cloudy kết hợp khung gỗ Pinewood, Ash hoặc Beech theo chỉ định; mút tỷ trọng cao; lớp fiber; vải contract-grade trên 30.000 chu kỳ Martindale; và chân thép sơn tĩnh điện mờ. Vải và đệm tạo độ mềm thị giác, trong khi gỗ và thép đảm nhiệm kết cấu.",
+    note: "Nguồn vật liệu, nhà cung cấp và tỷ lệ cấu thành chưa được công bố.",
+  },
+  {
+    number: "05",
+    title: "Nguồn gốc",
+    subtitle: "Brand, xưởng, bằng chứng",
+    icon: ShieldCheck,
+    state: "Đã đối chiếu một phần",
+    body: "Brand B+ Furniture, tên sản phẩm Cloudy, mã LC060, nhóm Lounge Chair và thông số 850 × 840 × 790 mm được đối chiếu từ nguồn chính thức. Tên xưởng, nơi lắp ráp và nguồn gốc từng bộ phận chưa được xác minh độc lập.",
+    note: "Monos tách rõ dữ liệu đã đối chiếu, dữ liệu brand khai và phần chưa biết.",
+  },
+  {
+    number: "06",
+    title: "Đời sống thật",
+    subtitle: "Sau khi rời showroom",
+    icon: Home,
+    state: "Hồ sơ đang mở",
+    body: "Chưa có hồ sơ người dùng về nơi Cloudy đang sống, bề mặt thay đổi ra sao, ghế đã được sửa hay di chuyển qua những ngôi nhà nào. Đây là lớp dành cho ảnh trong không gian thật, dấu vết sử dụng và ký ức của người sống cùng món đồ.",
+    note: "Không dùng ảnh styling để thay cho bằng chứng về đời sống thật.",
+  },
+  {
+    number: "07",
+    title: "Kết nối ngành",
+    subtitle: "Designer ↔ xưởng ↔ brand",
+    icon: Waypoints,
+    state: "Bản đồ quan hệ đang mở",
+    body: "Cloudy có brand đã xác định, nhưng mắt xích designer và xưởng vẫn cần được nối bằng nguồn tham chiếu. Câu chuyện đồ vật dùng món đồ như điểm gặp để hiểu ai nghĩ, ai làm, ai chịu trách nhiệm cho từng quyết định — không biến mối quan hệ này thành trang bán hàng.",
+    note: "Mục tiêu là làm rõ hệ sinh thái tạo ra sản phẩm, không thúc đẩy giao dịch.",
+  },
+];
 
 export default function StoryArchive() {
-  const [activeFilter, setActiveFilter] = useState("Tất cả");
-  const [savedStories, setSavedStories] = useState<string[]>([]);
-
-  const visibleStories =
-    activeFilter === "Tất cả"
-      ? stories
-      : stories.filter((story) => story.tag === activeFilter);
-
-  const toggleSaved = (id: string) => {
-    setSavedStories((current) =>
-      current.includes(id) ? current.filter((storyId) => storyId !== id) : [...current, id],
-    );
-  };
-
   return (
-    <div className="route-archive-content">
-      <div className="filter-bar" role="tablist" aria-label="Lọc archive câu chuyện">
-        {storyFilters.map((filter) => (
-          <button
-            className={`filter-chip ${activeFilter === filter.value ? "is-active" : ""}`}
-            key={filter.value}
-            type="button"
-            role="tab"
-            aria-selected={activeFilter === filter.value}
-            onClick={() => setActiveFilter(filter.value)}
-          >
-            {filter.label}
-          </button>
-        ))}
-      </div>
+    <article className="magazine-seven-layers" aria-labelledby="cloudy-magazine-title">
+      <header className="magazine-object-intro">
+        <div className="magazine-object-copy">
+          <span className="magazine-issue">Object Story / 001</span>
+          <h2 id="cloudy-magazine-title">Cloudy<span>.</span></h2>
+          <p>
+            Một chiếc ghế không kết thúc ở hình dáng. Hồ sơ này đọc Cloudy qua bảy lớp liên tục,
+            giữ nguyên cả dữ liệu đã biết lẫn những khoảng trống chưa thể kết luận.
+          </p>
+          <div className="magazine-object-meta">
+            <span>B+ Furniture</span><span>LC060</span><span>Lounge chair</span><span>Việt Nam</span>
+          </div>
+        </div>
+        <figure className="magazine-object-image">
+          <img
+            src="https://pub-0ec402f767364e6c8cb7b8b4a7160995.r2.dev/CLOUDY%203.jpg"
+            alt="Ghế Cloudy của B+ Furniture"
+          />
+          <figcaption>Ảnh sản phẩm / B+ Furniture</figcaption>
+        </figure>
+      </header>
 
-      <div className="story-grid route-story-grid">
-        {visibleStories.map((story, index) => {
-          const saved = savedStories.includes(story.id);
+      <nav className="magazine-layer-index" aria-label="Bảy lớp của hồ sơ Cloudy">
+        {cloudyLayers.map((layer) => <a href={`#layer-${layer.number}`} key={layer.number}>{layer.number} {layer.title}</a>)}
+      </nav>
+
+      <div className="magazine-layer-list">
+        {cloudyLayers.map((layer) => {
+          const Icon = layer.icon;
           return (
-            <article className={`story-card story-${index + 1} accent-${story.accent}`} id={story.id} key={story.id}>
-              <div className="story-visual">
-                {story.image ? (
-                  <img src="/monos-chair-study.png" alt="Nghiên cứu hình khối Cloudy" />
-                ) : (
-                  <div className="abstract-visual" aria-hidden="true">
-                    <span className="abstract-orb" />
-                    <span className="abstract-line" />
-                    <span className="abstract-word">MONOS</span>
-                  </div>
-                )}
-                <span className="story-number">{story.number}</span>
-                <span className="story-category">{story.category}</span>
-                <a
-                  className="story-eye"
-                  href={story.id === "cloudy" ? "/objects" : "/feed"}
-                  aria-label={`Mở ${story.title}`}
-                >
-                  <Eye size={17} strokeWidth={1.8} />
-                </a>
+            <section className="magazine-layer" id={`layer-${layer.number}`} key={layer.number}>
+              <div className="magazine-layer-number">{layer.number}</div>
+              <div className="magazine-layer-title">
+                <Icon size={22} strokeWidth={1.6} />
+                <span>{layer.subtitle}</span>
+                <h3>{layer.title}</h3>
               </div>
-              <div className="story-body">
-                <div className="story-meta"><span>{story.tag}</span><span>{story.readTime}</span></div>
-                <h3>{story.title}</h3>
-                <p>{story.excerpt}</p>
-                <div className="story-footer">
-                  <span className="story-author">{story.author}</span>
-                  <button
-                    className={`save-button ${saved ? "is-saved" : ""}`}
-                    type="button"
-                    aria-pressed={saved}
-                    aria-label={saved ? "Bỏ lưu câu chuyện" : "Lưu câu chuyện"}
-                    onClick={() => toggleSaved(story.id)}
-                  >
-                    <Bookmark size={16} strokeWidth={1.8} fill={saved ? "currentColor" : "none"} />
-                    <span>{saved ? "Đã lưu" : "Lưu"}</span>
-                  </button>
-                </div>
+              <div className="magazine-layer-content">
+                <span className="magazine-layer-state"><i /> {layer.state}</span>
+                <p>{layer.body}</p>
+                <small>{layer.note}</small>
               </div>
-            </article>
+            </section>
           );
         })}
       </div>
 
-      {visibleStories.length === 0 && (
-        <div className="empty-state">
-          <Sparkles size={18} />
-          <span>Chưa có câu chuyện trong bộ lọc này. Archive đang được mở rộng.</span>
+      <footer className="magazine-footer">
+        <div>
+          <span>Đọc tiếp hồ sơ dữ liệu</span>
+          <h3>Object Profile / Cloudy</h3>
         </div>
-      )}
-
-      <a className="route-next-link" href="/objects">
-        Đi tiếp tới Object Profile <ChevronRight size={16} />
-      </a>
-    </div>
+        <a className="dark-button" href="/objects#cloudy-product-data">Mở hồ sơ Cloudy <ArrowUpRight size={16} /></a>
+      </footer>
+    </article>
   );
 }

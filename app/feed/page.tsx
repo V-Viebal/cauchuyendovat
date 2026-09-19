@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Activity, ArrowUpRight } from "lucide-react";
 import FeedList from "../components/feed-list";
 import { MonosFrame } from "../components/monos-shell";
@@ -21,7 +22,7 @@ export default function FeedPage() {
           <p>
             Một dòng cập nhật ngắn cho những gì đang xảy ra quanh đồ vật: hồ sơ mới, mốc nguồn gốc, brief mở và lời mời đóng góp.
           </p>
-          <a className="text-button" href="/#submit">Gửi một cập nhật <ArrowUpRight size={16} /></a>
+          <Link className="text-button" href="/#submit">Gửi một cập nhật <ArrowUpRight size={16} /></Link>
         </div>
       </section>
 

@@ -114,6 +114,43 @@ export const timeline = [
   },
 ];
 
+export const cloudyProduct = {
+  name: "CLOUDY",
+  productId: "76",
+  sku: "LC060",
+  category: "Lounge Chair · Lounge & Relax",
+  description:
+    "Cloudy có đường cong mềm và cấu trúc phân lớp, lấy cảm hứng từ nhịp trôi tĩnh lặng của những đám mây. Các múi chần ngang gợi chuyển động nhẹ của bầu trời, trong khi khung kim loại thanh mảnh giữ lại một dáng ngồi thoáng và cân bằng.",
+  sourceUrl: "https://bplusfurniture.com.vn/products/cloudy?listingType=category&listing=seating&label=SEATING&categories=lounge-chair",
+  price: "16.700.000 ₫",
+  dimensions: "850 × 840 × 790 mm",
+  seatHeight: "450 mm",
+  origin: "Việt Nam",
+  images: [
+    { url: "https://pub-0ec402f767364e6c8cb7b8b4a7160995.r2.dev/pr-cloudy-thump2", alt: "Cloudy — ảnh tổng thể" },
+    { url: "https://pub-0ec402f767364e6c8cb7b8b4a7160995.r2.dev/CLOUDY 3.jpg", alt: "Cloudy — góc nhìn chính" },
+    { url: "https://pub-0ec402f767364e6c8cb7b8b4a7160995.r2.dev/CLOUDY 1.jpg", alt: "Cloudy — chi tiết tay vịn" },
+    { url: "https://pub-0ec402f767364e6c8cb7b8b4a7160995.r2.dev/CLOUDY 2.jpg", alt: "Cloudy — chi tiết thân ghế" },
+  ],
+  specifications: [
+    { label: "Khung & kết cấu", value: "Gỗ tự nhiên (Pinewood / Ash / Beech theo chỉ định). Xử lý chống nấm, chống mối mọt và phủ bảo vệ chống ẩm." },
+    { label: "Đệm", value: "Mút polyurethane tỷ trọng cao D35–50 kết hợp lớp fiber wrap." },
+    { label: "Bọc", value: "Vải contract-grade; độ bền mài mòn trên 30.000 chu kỳ Martindale. Có thể chọn thêm xử lý chống UV và chống bám bẩn." },
+    { label: "Chân / đế", value: "Thép sơn tĩnh điện mờ, đi cùng chân tăng chỉnh không để lại dấu trên sàn." },
+    { label: "Tùy biến", value: "Có thể tùy biến vật liệu bọc và màu hoàn thiện theo yêu cầu dự án." },
+  ],
+  highlights: [
+    { title: "Bề mặt bọc", body: "Các múi đệm được chia lớp tạo cảm giác bồng nhẹ như mây, đồng thời phân bổ lực đỡ tự nhiên khi ngồi lâu.", image: "https://pub-0ec402f767364e6c8cb7b8b4a7160995.r2.dev/CLOUDY 5.jpg" },
+    { title: "Tay vịn gỗ", body: "Tay vịn gỗ mảnh được cân chỉnh theo dáng ghế, đủ nâng đỡ mà không làm nặng hình khối.", image: "https://pub-0ec402f767364e6c8cb7b8b4a7160995.r2.dev/CLOUDY 2.jpg" },
+    { title: "Chân ghế", body: "Chân kim loại sơn tĩnh điện có tiết diện thanh, tạo vẻ nhẹ và tăng độ bền cho tổng thể.", image: "https://pub-0ec402f767364e6c8cb7b8b4a7160995.r2.dev/CLOUDY 4.jpg" },
+  ],
+  downloads: [
+    { name: "Lounge chair - CLOUDY - VER 2020.max", type: "3D MAX", size: "19.64 MB", url: "https://bplusfurniture.sg.larksuite.com/file/WPGtbt4p8oRbqXxGDMgls1Rwg7c" },
+    { name: "Lounge chair - CLOUDY - VER 2021.skp", type: "SketchUp", size: "2.10 MB", url: "https://bplusfurniture.sg.larksuite.com/file/VHJcbDcYeovrq5x9duKlbMtAg8f" },
+    { name: "Loungechair - CLOUDY - ICON WEB - VER 2021.dwg", type: "CAD", size: "121.41 KB", url: "https://bplusfurniture.sg.larksuite.com/file/Wokubj1Ogo0EjmxZ0hll2a9ogLc" },
+  ],
+};
+
 export const factoryFilters = ["Tất cả", "Gỗ & bọc", "Kim loại", "Hoàn thiện"];
 
 export const factoryDirectory = [
@@ -207,19 +244,22 @@ export const designerProfiles = [
   },
 ];
 
-export const spaceFilters = ["Tất cả", "Nhà ở", "Hospitality", "Public"];
+export const spaceFilters = ["Tất cả", "Văn phòng", "Nhà ở", "Hospitality", "Public"];
 
 export const spaceDirectory = [
   {
     id: "space-01",
-    name: "Không gian 01 / Nhà ở",
-    location: "Thảo Điền · Hồ Chí Minh",
-    category: "Nhà ở",
-    story: "Một chiếc lounge chair được nhìn thấy qua những buổi chiều ở nhà.",
-    specialties: ["Living room", "Lounge chair", "Furniture in Use"],
+    name: "Không gian 01 / Văn phòng",
+    location: "Hồ Chí Minh · Việt Nam",
+    category: "Văn phòng",
+    story: "Cloudy được nhìn thấy trong một không gian làm việc mở, nơi ghế trở thành điểm nghỉ, gặp gỡ và sử dụng hằng ngày.",
+    specialties: ["Office lounge", "Cloudy", "Furniture in Use"],
     status: "Hồ sơ mẫu",
     icon: "home",
     tone: "lime",
+    thumbnail: "/cloudy-space-pvgas.jpg",
+    thumbnailAlt: "Không gian văn phòng với các ghế Cloudy",
+    relatedObjects: [{ name: "Cloudy", type: "Lounge chair", thumbnail: "https://pub-0ec402f767364e6c8cb7b8b4a7160995.r2.dev/pr-cloudy-thump2" }],
   },
   {
     id: "space-02",
@@ -231,6 +271,9 @@ export const spaceDirectory = [
     status: "Đang xác minh",
     icon: "hospitality",
     tone: "terra",
+    thumbnail: null,
+    thumbnailAlt: "",
+    relatedObjects: [{ name: "Đồ vật đang xác minh", type: "Furniture", thumbnail: null }],
   },
   {
     id: "space-03",
@@ -242,6 +285,9 @@ export const spaceDirectory = [
     status: "Hồ sơ mẫu",
     icon: "public",
     tone: "blue",
+    thumbnail: null,
+    thumbnailAlt: "",
+    relatedObjects: [{ name: "Đồ vật liên quan", type: "Object profile", thumbnail: null }],
   },
 ];
 
@@ -259,6 +305,9 @@ export const objectDirectory = [
     filter: "Lounge chair",
     status: "Hồ sơ đang mở",
     tone: "terra",
+    thumbnail: "https://pub-0ec402f767364e6c8cb7b8b4a7160995.r2.dev/pr-cloudy-thump2",
+    thumbnailAlt: "Cloudy — ghế lounge của B+ Furniture",
+    thumbnailLabel: "Ảnh sản phẩm / B+",
     href: "#cloudy-profile",
   },
   {
@@ -272,6 +321,9 @@ export const objectDirectory = [
     filter: "Bàn",
     status: "Đang xác minh",
     tone: "lime",
+    thumbnail: null,
+    thumbnailAlt: "",
+    thumbnailLabel: "Ảnh sản phẩm đang chờ bổ sung",
   },
   {
     id: "object-003",
@@ -284,6 +336,9 @@ export const objectDirectory = [
     filter: "Đèn",
     status: "Hồ sơ mẫu",
     tone: "blue",
+    thumbnail: null,
+    thumbnailAlt: "",
+    thumbnailLabel: "Ảnh sản phẩm đang chờ bổ sung",
   },
 ];
 

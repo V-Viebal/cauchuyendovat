@@ -3,8 +3,8 @@ import StoryArchive from "../components/story-archive";
 import { MonosFrame } from "../components/monos-shell";
 
 export const metadata: Metadata = {
-  title: "Câu chuyện đồ vật — Monos",
-  description: "Archive những câu chuyện phía sau các đồ vật chúng ta sống cùng.",
+  title: "Câu chuyện đồ vật — Cloudy — Monos",
+  description: "Tạp chí online về ngành Furniture: một món đồ, bảy lớp đọc — câu chuyện, designer, cách làm, vật liệu, nguồn gốc, đời sống thật và kết nối ngành.",
 };
 
 export default function StoriesPage() {
@@ -12,16 +12,16 @@ export default function StoriesPage() {
     <MonosFrame active="stories">
       <section className="route-hero route-hero-stories">
         <div>
-          <div className="eyebrow muted">Object Story · Archive 01</div>
-          <h1>Những câu chuyện<br /><em>đang mở.</em></h1>
+          <div className="eyebrow muted">Câu chuyện đồ vật · Issue 01 · Cloudy</div>
+          <h1>Một món đồ.<br /><em>Bảy lớp đọc.</em></h1>
         </div>
         <p>
-          Tạp chí là cửa vào. Mỗi câu chuyện dẫn đến một Object Profile, một vật liệu, một người và một nơi chốn phía sau món đồ.
+          Không mở bảy chuyên mục. Câu chuyện đồ vật đi xuyên qua cùng một chiếc ghế Cloudy — từ lý do ra đời đến những mối nối giữa designer, xưởng và brand.
         </p>
       </section>
 
       <section className="section-pad route-section route-stories-section">
-        <div className="route-section-label">Browse the archive</div>
+        <div className="route-section-label">Issue 01 / Cloudy — B+ Furniture</div>
         <StoryArchive />
       </section>
     </MonosFrame>

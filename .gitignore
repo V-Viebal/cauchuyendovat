@@ -44,6 +44,5 @@ next-env.d.ts
 /.codex/
 /outputs/
 /work/
-.openai/*
-!.openai/hosting.json
-.tmp-deploy/
+/.corepack/
+/.pnpm-store/
