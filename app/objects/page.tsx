@@ -28,7 +28,7 @@ export default function ObjectsPage() {
             <div className="eyebrow muted"><FileCheck2 size={14} /> Object Profile / 001</div>
             <h2>Cloudy<span className="route-title-dot">.</span></h2>
             <p>Một chiếc ghế có hình dáng như một đám mây. Nhưng để hiểu Cloudy, hình dáng chỉ là điểm bắt đầu.</p>
-            <a className="dark-button" href="#cloudy-details">Mở hồ sơ Cloudy <ArrowUpRight size={16} /></a>
+            <a className="dark-button" href="/objects/cloudy">Mở hồ sơ Cloudy <ArrowUpRight size={16} /></a>
           </div>
           <div className="route-object-cover">
             <img src="https://pub-0ec402f767364e6c8cb7b8b4a7160995.r2.dev/CLOUDY%203.jpg" alt="Cloudy — ghế lounge chính thức của B+ Furniture" />

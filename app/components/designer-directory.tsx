@@ -74,7 +74,19 @@ export default function DesignerDirectory() {
           return (
             <article className={`designer-card designer-card-${designer.tone}`} id={designer.id} key={designer.id}>
               <div className="designer-card-head">
-                <div className="designer-avatar"><Icon size={22} strokeWidth={1.6} /></div>
+                {designer.photo ? (
+                  <div className="designer-avatar designer-avatar-photo">
+                    <img src={designer.photo} alt={`Ảnh hồ sơ ${designer.name}`} />
+                  </div>
+                ) : designer.entityType === "Công ty" ? (
+                  <div className="designer-logo-wrap">
+                    <img className="designer-logo" src={"logo" in designer ? designer.logo : "/db-studio-logo.jpg"} alt={`Logo ${designer.name}`} />
+                    <span>DB Studio · logo cung cấp</span>
+                  </div>
+                ) : (
+                  <div className="designer-avatar"><Icon size={22} strokeWidth={1.6} /></div>
+                )}
+                {designer.photoLabel && <span className="designer-photo-note">{designer.photoLabel}</span>}
                 <span className="designer-status"><span /> {designer.status}</span>
               </div>
               <div className="designer-index">0{index + 1} / COMMUNITY PROFILE</div>
@@ -86,7 +98,9 @@ export default function DesignerDirectory() {
               <div className="designer-tags">
                 {designer.specialties.map((specialty) => <span key={specialty}>{specialty}</span>)}
               </div>
-              <a className="card-link" href="/feed#feed-designer">Theo dõi cộng đồng <ArrowUpRight size={15} /></a>
+              <a className="card-link" href={designer.id === "designer-01" ? "/designers/designer-01" : designer.id === "vi-van-truong" ? "/designers/vi-van-truong" : designer.id === "cao-thi-mai-nguyen" ? "/designers/cao-thi-mai-nguyen" : designer.id === "daniela-thach-thao" ? "/designers/daniela-thach-thao" : designer.id === "designer-02" ? "/designers/db-studio" : "/feed#feed-designer"}>
+                {designer.id === "designer-01" || designer.id === "vi-van-truong" || designer.id === "cao-thi-mai-nguyen" || designer.id === "daniela-thach-thao" || designer.id === "designer-02" ? "Mở hồ sơ" : "Theo dõi cộng đồng"} <ArrowUpRight size={15} />
+              </a>
             </article>
           );
         })}

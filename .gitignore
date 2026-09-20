@@ -46,3 +46,6 @@ next-env.d.ts
 /work/
 /.corepack/
 /.pnpm-store/
+# Local source-download evidence and prior archive artifacts; never publish or deploy them.
+/.deploy-source/
+/.source-refresh-*/

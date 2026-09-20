@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { ArrowUpRight, Factory } from "lucide-react";
 import FactoryDirectory from "../components/factory-directory";
 import { MonosFrame } from "../components/monos-shell";
@@ -21,7 +20,10 @@ export default function FactoriesPage() {
           <p>
             Danh bạ giúp tìm đúng năng lực cho một prototype, một batch nhỏ hoặc một công đoạn hoàn thiện — theo dữ liệu có thể kiểm chứng.
           </p>
-          <Link className="text-button" href="/#submit">Đề xuất một nhà máy <ArrowUpRight size={16} /></Link>
+          <div className="route-hero-actions">
+            <a className="text-button" href="/#submit">Đề xuất một nhà máy <ArrowUpRight size={16} /></a>
+            <a className="text-button" href="/materials">Mở thư viện vật liệu <ArrowUpRight size={16} /></a>
+          </div>
         </div>
       </section>
 

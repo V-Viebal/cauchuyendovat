@@ -351,7 +351,16 @@ export default function Home() {
               <a className="nav-sublink" href="/designers" onClick={() => setMobileMenuOpen(false)}>Designer</a>
               <a className="nav-sublink" href="/objects" onClick={() => setMobileMenuOpen(false)}>Đồ vật</a>
               <a className="nav-sublink" href="/factories" onClick={() => setMobileMenuOpen(false)}>Nhà máy</a>
+              <a className="nav-sublink" href="/brands" onClick={() => setMobileMenuOpen(false)}>Brand</a>
               <a className="nav-sublink" href="/spaces" onClick={() => setMobileMenuOpen(false)}>Không gian</a>
+            </div>
+          </div>
+          <div className="nav-dropdown">
+            <a className="nav-link nav-parent" href="/materials" aria-haspopup="true" onClick={() => setMobileMenuOpen(false)}>
+              Thư viện<span className="nav-caret" aria-hidden="true">⌄</span>
+            </a>
+            <div className="nav-submenu" aria-label="Thư viện — danh mục">
+              <a className="nav-sublink" href="/materials" onClick={() => setMobileMenuOpen(false)}>Vật liệu</a>
             </div>
           </div>
           <a className="nav-link" href="/provenance" onClick={() => setMobileMenuOpen(false)}>

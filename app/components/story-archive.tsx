@@ -60,6 +60,8 @@ const cloudyLayers = [
     title: "Đời sống thật",
     subtitle: "Sau khi rời showroom",
     icon: Home,
+    image: "/cloudy-space-pvgas.jpg",
+    imageAlt: "Cloudy trong một không gian văn phòng mở",
     state: "Hồ sơ đang mở",
     body: "Chưa có hồ sơ người dùng về nơi Cloudy đang sống, bề mặt thay đổi ra sao, ghế đã được sửa hay di chuyển qua những ngôi nhà nào. Đây là lớp dành cho ảnh trong không gian thật, dấu vết sử dụng và ký ức của người sống cùng món đồ.",
     note: "Không dùng ảnh styling để thay cho bằng chứng về đời sống thật.",
@@ -80,11 +82,12 @@ export default function StoryArchive() {
     <article className="magazine-seven-layers" aria-labelledby="cloudy-magazine-title">
       <header className="magazine-object-intro">
         <div className="magazine-object-copy">
-          <span className="magazine-issue">Object Story / 001</span>
+          <span className="magazine-issue">Câu chuyện đồ vật / 001</span>
           <h2 id="cloudy-magazine-title">Cloudy<span>.</span></h2>
+          <p className="magazine-hook">Vì sao một chiếc ghế lại muốn được ôm?</p>
           <p>
-            Một chiếc ghế không kết thúc ở hình dáng. Hồ sơ này đọc Cloudy qua bảy lớp liên tục,
-            giữ nguyên cả dữ liệu đã biết lẫn những khoảng trống chưa thể kết luận.
+            Cloudy bắt đầu từ một cảm giác rất đơn giản: ngồi xuống và được giữ lấy. Từ đó,
+            câu chuyện đi qua người thiết kế, vật liệu, xưởng làm ra nó và nơi chiếc ghế bắt đầu sống.
           </p>
           <div className="magazine-object-meta">
             <span>B+ Furniture</span><span>LC060</span><span>Lounge chair</span><span>Việt Nam</span>
@@ -98,6 +101,18 @@ export default function StoryArchive() {
           <figcaption>Ảnh sản phẩm / B+ Furniture</figcaption>
         </figure>
       </header>
+
+      <div className="magazine-fact-strip" aria-label="Thông tin nhanh về Cloudy">
+        <div><span>Brand</span><strong>B+ Furniture</strong></div>
+        <div><span>Mã sản phẩm</span><strong>LC060</strong></div>
+        <div><span>Loại</span><strong>Lounge chair</strong></div>
+        <div><span>Hồ sơ</span><strong>Đang mở</strong></div>
+      </div>
+
+      <div className="magazine-reading-note">
+        <span>Đọc theo hành trình</span>
+        <p>Không phải bảy chuyên mục. Một món đồ đi qua bảy lớp để lộ ra những người, vật liệu và quyết định phía sau nó.</p>
+      </div>
 
       <nav className="magazine-layer-index" aria-label="Bảy lớp của hồ sơ Cloudy">
         {cloudyLayers.map((layer) => <a href={`#layer-${layer.number}`} key={layer.number}>{layer.number} {layer.title}</a>)}
@@ -117,6 +132,12 @@ export default function StoryArchive() {
               <div className="magazine-layer-content">
                 <span className="magazine-layer-state"><i /> {layer.state}</span>
                 <p>{layer.body}</p>
+                {layer.image && (
+                  <figure className="magazine-layer-image">
+                    <img src={layer.image} alt={layer.imageAlt} loading="lazy" />
+                    <figcaption>Furniture in use / Không gian đại diện cho Cloudy</figcaption>
+                  </figure>
+                )}
                 <small>{layer.note}</small>
               </div>
             </section>

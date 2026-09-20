@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ArrowUpRight, Box, ChevronRight, Factory, MapPin, Users, UsersRound } from "lucide-react";
+import { ArrowUpRight, Box, ChevronRight, Factory, MapPin, Tag, Users, UsersRound } from "lucide-react";
 import { MonosFrame } from "../components/monos-shell";
 
 export const metadata: Metadata = {
@@ -42,6 +42,15 @@ const networkCards = [
     icon: MapPin,
     tone: "network-green",
     href: "/spaces",
+    link: "Mở danh bạ",
+  },
+  {
+    title: "Brand",
+    count: "1 hồ sơ",
+    copy: "Thương hiệu đứng sau sản phẩm — nơi công bố, kết nối và những điều vẫn còn kín.",
+    icon: Tag,
+    tone: "network-yellow",
+    href: "/brands",
     link: "Mở danh bạ",
   },
 ];

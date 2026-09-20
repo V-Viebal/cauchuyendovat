@@ -1,11 +1,10 @@
 "use client";
 
 import { Activity, ArrowUpRight, Menu, X } from "lucide-react";
-import Link from "next/link";
 import { useState, type ReactNode } from "react";
 import { feedItems } from "../monos-data";
 
-type ActivePage = "stories" | "objects" | "journey" | "designers" | "factories" | "spaces" | "provenance" | "feed";
+type ActivePage = "stories" | "objects" | "journey" | "designers" | "factories" | "spaces" | "brands" | "provenance" | "feed" | "library" | "materials";
 
 type NavItem = {
   href: string;
@@ -25,7 +24,16 @@ const navItems: NavItem[] = [
       { href: "/designers", label: "Designer", id: "designers" },
       { href: "/objects", label: "Đồ vật", id: "objects" },
       { href: "/factories", label: "Nhà máy", id: "factories" },
+      { href: "/brands", label: "Brand", id: "brands" },
       { href: "/spaces", label: "Không gian", id: "spaces" },
+    ],
+  },
+  {
+    href: "/materials",
+    label: "Thư viện",
+    id: "library",
+    children: [
+      { href: "/materials", label: "Vật liệu", id: "materials" },
     ],
   },
   { href: "/provenance", label: "Nguồn gốc", id: "provenance" },
@@ -45,10 +53,10 @@ export function MonosHeader({ active }: { active?: ActivePage }) {
 
   return (
     <header className="site-header">
-      <Link className="brand" href="/" aria-label="Monos, về trang chủ">
+      <a className="brand" href="/" aria-label="Monos, về trang chủ">
         <LogoMark />
         <span className="brand-word">MONOS</span>
-      </Link>
+      </a>
 
       <nav className={`main-nav ${mobileMenuOpen ? "is-open" : ""}`} aria-label="Điều hướng chính">
         {navItems.map((item) => {
@@ -98,9 +106,9 @@ export function MonosHeader({ active }: { active?: ActivePage }) {
         <a className="icon-button search-trigger" href="/feed" aria-label="Mở Monos Feed">
           <Activity size={18} strokeWidth={1.8} />
         </a>
-        <Link className="submit-button header-submit" href="/#submit">
+        <a className="submit-button header-submit" href="/#submit">
           Gửi một đồ vật <ArrowUpRight size={16} strokeWidth={1.8} />
-        </Link>
+        </a>
         <button
           className="icon-button menu-trigger"
           type="button"
@@ -144,10 +152,10 @@ export function FeedStrip({ compact = false }: { compact?: boolean }) {
 export function MonosFooter() {
   return (
     <footer className="site-footer">
-      <Link className="footer-brand" href="/">
+      <a className="footer-brand" href="/">
         <LogoMark />
         <span>MONOS</span>
-      </Link>
+      </a>
       <p>Stories of the things we live with.</p>
       <div className="footer-links">
         {navItems.flatMap((item) => [item, ...(item.children ?? [])]).map((item) => (

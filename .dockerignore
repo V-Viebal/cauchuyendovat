@@ -19,3 +19,5 @@ coverage
 .codex
 outputs
 work
+.deploy-source
+.source-refresh-*

@@ -151,7 +151,7 @@ export const cloudyProduct = {
   ],
 };
 
-export const factoryFilters = ["Tất cả", "Gỗ & bọc", "Kim loại", "Hoàn thiện"];
+export const factoryFilters = ["Tất cả", "Gỗ & bọc", "Kim loại", "Hoàn thiện", "Custom furniture"];
 
 export const factoryDirectory = [
   {
@@ -184,6 +184,26 @@ export const factoryDirectory = [
     status: "Hồ sơ mẫu",
     icon: "sparkles",
   },
+  {
+    id: "factory-04",
+    name: "First Maker / Custom furniture",
+    region: "Hồ Chí Minh · Miền Nam",
+    capability: "Custom furniture · Bespoke interiors",
+    specialties: ["Furniture", "Bespoke", "Renovate"],
+    filter: "Custom furniture",
+    status: "Thông tin công khai · đang xác minh",
+    icon: "factory",
+  },
+  {
+    id: "factory-05",
+    name: "Nhà máy Tân Thành / Ambie Shelf",
+    region: "Việt Nam · địa điểm đang xác minh",
+    capability: "Đồ gỗ · Sơn hoàn thiện",
+    specialties: ["Gỗ", "Sơn Protego", "Lắp ráp"],
+    filter: "Hoàn thiện",
+    status: "Theo hồ sơ sản phẩm · đang xác minh",
+    icon: "factory",
+  },
 ];
 
 export const designerFilters = ["Tất cả", "Furniture", "Material", "Spatial", "Production"];
@@ -204,17 +224,62 @@ export const designerProfiles = [
     tone: "lime",
   },
   {
+    id: "vi-van-truong",
+    name: "Vi Văn Trường",
+    entityType: "Cá nhân",
+    discipline: "Furniture & Interior Designer",
+    location: "Việt Nam",
+    bio: "Một ngôn ngữ tối giản đương đại được kéo gần về những ký ức, đường cong và cấu trúc của văn hoá Việt.",
+    specialties: ["Furniture", "Wood", "Cultural reference"],
+    filter: "Furniture",
+    status: "Hồ sơ từ dossier HMA 2026",
+    icon: "furniture",
+    tone: "blue",
+    photo: "/vi-van-truong.jpg",
+  },
+  {
+    id: "cao-thi-mai-nguyen",
+    name: "Cao Thị Mai Nguyễn",
+    entityType: "Cá nhân",
+    discipline: "Furniture & Product Designer",
+    location: "Việt Nam · profile tạm",
+    bio: "Đồng thiết kế Ambie Shelf — một hệ kệ mô-đun đi từ những góc tường bị bỏ quên đến khả năng làm mới không gian.",
+    specialties: ["Furniture", "Modular", "Wood"],
+    filter: "Furniture",
+    status: "Profile tạm · chờ bổ sung",
+    icon: "furniture",
+    tone: "terra",
+    photo: "/ambie-designer-pair.jpg",
+    photoLabel: "Ảnh nhóm tạm · chờ profile riêng",
+  },
+  {
+    id: "daniela-thach-thao",
+    name: "Daniela Thạch Thảo",
+    entityType: "Cá nhân",
+    discipline: "Furniture & Product Designer",
+    location: "Việt Nam · profile tạm",
+    bio: "Đồng thiết kế Ambie Shelf — khai thác chuyển động, khớp xoay và sự thích nghi của đồ vật trong đời sống thật.",
+    specialties: ["Furniture", "Movement", "Product"],
+    filter: "Furniture",
+    status: "Profile tạm · chờ bổ sung",
+    icon: "furniture",
+    tone: "blue",
+    photo: "/ambie-designer-pair.jpg",
+    photoLabel: "Ảnh nhóm tạm · chờ profile riêng",
+  },
+  {
     id: "designer-02",
     name: "Studio 02 / Material",
     entityType: "Công ty",
-    discipline: "Material Researcher",
+    discipline: "Công ty thiết kế · Material Research",
     location: "Hà Nội · Việt Nam",
-    bio: "Nghiên cứu bề mặt, vật liệu bản địa và cách kỹ thuật thủ công đi vào sản phẩm mới.",
+    bio: "DB Studio là một công ty thiết kế, phát triển ngôn ngữ furniture qua vật liệu, cấu tạo và các chi tiết có thể làm thật.",
     specialties: ["Vật liệu", "Bề mặt", "Craft"],
     filter: "Material",
-    status: "Hồ sơ mẫu",
+    status: "Hồ sơ công ty · đang mở",
     icon: "material",
     tone: "terra",
+    logo: "/db-studio-logo.jpg",
   },
   {
     id: "designer-03",
@@ -291,7 +356,29 @@ export const spaceDirectory = [
   },
 ];
 
-export const objectFilters = ["Tất cả", "Lounge chair", "Bàn", "Đèn"];
+export const objectFilters = ["Tất cả", "Lounge chair", "Kệ", "Bench", "Bàn", "Đèn"];
+
+export const brandFilters = ["Tất cả", "Furniture", "Lounge & Relax"];
+
+export const brandDirectory = [
+  {
+    id: "b-plus",
+    name: "B+ Furniture",
+    entityType: "Thương hiệu",
+    location: "Việt Nam",
+    description: "Thương hiệu furniture với các sản phẩm seating và lounge; Cloudy là một hồ sơ sản phẩm đang mở.",
+    specialties: ["Furniture", "Lounge & Relax", "Product development"],
+    filter: "Furniture",
+    status: "Thông tin sản phẩm do brand cung cấp",
+    tone: "terra",
+    thumbnail: "https://pub-0ec402f767364e6c8cb7b8b4a7160995.r2.dev/pr-cloudy-thump2",
+    thumbnailAlt: "Cloudy — sản phẩm được B+ Furniture giới thiệu",
+    relatedObjects: [{ name: "Cloudy", href: "/objects/cloudy" }],
+    factoryDisclosure: "Nhà máy chưa công bố bởi thương hiệu",
+    sourceUrl: cloudyProduct.sourceUrl,
+    href: "/brands/b-plus",
+  },
+];
 
 export const objectDirectory = [
   {
@@ -308,11 +395,43 @@ export const objectDirectory = [
     thumbnail: "https://pub-0ec402f767364e6c8cb7b8b4a7160995.r2.dev/pr-cloudy-thump2",
     thumbnailAlt: "Cloudy — ghế lounge của B+ Furniture",
     thumbnailLabel: "Ảnh sản phẩm / B+",
-    href: "#cloudy-profile",
+    href: "/objects/cloudy",
+  },
+  {
+    id: "ganh-bench",
+    code: "Object Profile / 002",
+    name: "Gánh Bench",
+    type: "Bench",
+    brand: "Vi Văn Trường",
+    origin: "Việt Nam",
+    excerpt: "Một chiếc ghế băng lấy dáng đòn gánh làm điểm khởi đầu — nơi đường cong, chốt mộng và gỗ mộc cùng kể một câu chuyện Việt.",
+    filter: "Bench",
+    status: "Theo dossier HMA 2026",
+    tone: "terra",
+    thumbnail: "/ganh-bench-wide.jpg",
+    thumbnailAlt: "Gánh Bench — ghế băng gỗ của Vi Văn Trường",
+    thumbnailLabel: "HMA 2026 / Object study",
+    href: "/objects/ganh-bench",
+  },
+  {
+    id: "ambie-shelf",
+    code: "Object Profile / 003",
+    name: "Ambie Shelf",
+    type: "Kệ mô-đun",
+    brand: "Cao Thị Mai Nguyễn · Daniela Thạch Thảo",
+    origin: "Việt Nam",
+    excerpt: "Một hệ kệ di động bắt đầu từ những góc tường khó bài trí, dùng khớp xoay, bánh xe và các tầng gỗ để thích nghi với không gian.",
+    filter: "Kệ",
+    status: "Theo hồ sơ cung cấp · đang xác minh",
+    tone: "lime",
+    thumbnail: "/ambie-shelf-wide.jpg",
+    thumbnailAlt: "Ambie Shelf — hệ kệ mô-đun trên bánh xe",
+    thumbnailLabel: "Ảnh sản phẩm / hồ sơ cung cấp",
+    href: "/objects/ambie-shelf",
   },
   {
     id: "object-002",
-    code: "Object Profile / 002",
+    code: "Object Profile / 004",
     name: "Mẫu 02 / Bàn phụ",
     type: "Bàn",
     brand: "Đang xác minh",
@@ -327,7 +446,7 @@ export const objectDirectory = [
   },
   {
     id: "object-003",
-    code: "Object Profile / 003",
+    code: "Object Profile / 005",
     name: "Mẫu 03 / Đèn bàn",
     type: "Đèn",
     brand: "Hồ sơ mẫu",
@@ -373,6 +492,18 @@ export type FeedItem = {
 };
 
 export const feedItems: FeedItem[] = [
+  {
+    id: "feed-ambie",
+    type: "Object Profile / 003",
+    title: "Ambie Shelf vừa mở một hồ sơ mới.",
+    body: "Hai designer, một hệ kệ mô-đun, nhà máy Tân Thành và lớp hoàn thiện Sơn Protego đang được nối vào cùng một câu chuyện đồ vật.",
+    author: "Monos Editorial",
+    time: "vừa xong",
+    meta: "Ambie Shelf · Cao Thị Mai Nguyễn · Daniela Thạch Thảo",
+    tone: "lime",
+    likes: 29,
+    comments: 5,
+  },
   {
     id: "feed-cloudy",
     type: "Object Profile / 001",
