@@ -1,0 +1,1880 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-sans: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    --font-display: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    --font-serif: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    --font-mono: 'JetBrains Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+
+  [data-font="jakarta"] {
+    --font-sans: 'Plus Jakarta Sans', 'Be Vietnam Pro', sans-serif;
+    --font-display: 'Plus Jakarta Sans', 'Be Vietnam Pro', sans-serif;
+    --font-serif: 'Plus Jakarta Sans', 'Be Vietnam Pro', sans-serif;
+  }
+
+  [data-font="vietnam"] {
+    --font-sans: 'Be Vietnam Pro', 'Plus Jakarta Sans', sans-serif;
+    --font-display: 'Be Vietnam Pro', 'Plus Jakarta Sans', sans-serif;
+    --font-serif: 'Be Vietnam Pro', 'Plus Jakarta Sans', sans-serif;
+  }
+
+  [data-font="lexend"] {
+    --font-sans: 'Lexend', 'Plus Jakarta Sans', 'Be Vietnam Pro', sans-serif;
+    --font-display: 'Lexend', 'Plus Jakarta Sans', 'Be Vietnam Pro', sans-serif;
+    --font-serif: 'Lexend', 'Plus Jakarta Sans', 'Be Vietnam Pro', sans-serif;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: #f8f8f8;
+    color: #0d0c22;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    letter-spacing: -0.015em;
+  }
+
+  /* Modern display typography - replaces classic serif with geometric, crisp modern sans */
+  .font-serif,
+  .font-display {
+    font-family: var(--font-display) !important;
+    letter-spacing: -0.025em;
+  }
+
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+}
+
+/* Custom Dribbble Clean Scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #f8f8f8;
+}
+::-webkit-scrollbar-thumb {
+  background: #e7e7e9;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #c7c7cc;
+}
+
+/* --------------------------------------------------------------------------
+   Monos responsive shell
+   The reference uses a generous editorial canvas. Keep that feeling on wide
+   screens, but collapse the rails before they squeeze the content on laptops.
+   -------------------------------------------------------------------------- */
+:root {
+  --monos-ink: #0d0c22;
+  --monos-pink: #ea4c89;
+  --monos-border: #e7e7e9;
+  --monos-page-gutter: clamp(16px, 3vw, 48px);
+}
+
+body {
+  overflow-x: hidden;
+}
+
+.monos-navbar {
+  min-width: 0;
+  padding-inline: var(--monos-page-gutter);
+  gap: 16px;
+}
+
+.monos-navbar-left {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.monos-top-nav {
+  min-width: 0;
+  overflow: hidden;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+.monos-top-nav > button {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.monos-navbar-actions {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.monos-global-search {
+  width: clamp(180px, 20vw, 288px);
+  min-width: 170px;
+}
+
+.monos-feed-layout {
+  display: grid;
+  grid-template-columns: minmax(220px, 280px) minmax(0, 680px);
+  justify-content: center;
+  align-items: start;
+  gap: clamp(20px, 2.2vw, 32px);
+  width: 100%;
+  max-width: 1540px;
+  padding: 20px var(--monos-page-gutter) 0;
+}
+
+.monos-left-sidebar,
+.monos-right-sidebar {
+  width: auto;
+  max-width: none;
+  min-width: 0;
+  border: 0;
+}
+
+.monos-left-sidebar {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 80px);
+  top: 80px;
+  padding: 4px 8px 32px 0;
+}
+
+.monos-right-sidebar {
+  display: none;
+  flex-direction: column;
+  height: calc(100vh - 80px);
+  top: 80px;
+  padding: 4px 0 32px 8px;
+}
+
+.monos-feed-main {
+  width: 100%;
+  min-width: 0;
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 0 28px;
+}
+
+@media (max-width: 1599px) {
+  .monos-nav-optional {
+    display: none !important;
+  }
+}
+
+@media (max-width: 1399px) {
+  .monos-font-control {
+    display: none;
+  }
+
+  .monos-global-search {
+    width: clamp(180px, 18vw, 230px);
+  }
+
+  .monos-feed-layout {
+    grid-template-columns: minmax(210px, 240px) minmax(0, 680px);
+  }
+
+  .monos-right-sidebar {
+    display: none !important;
+  }
+}
+
+@media (min-width: 1480px) {
+  .monos-feed-layout {
+    grid-template-columns: minmax(240px, 280px) minmax(0, 680px) minmax(260px, 320px);
+  }
+
+  .monos-right-sidebar {
+    display: flex !important;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1399px) {
+  .monos-navbar-left {
+    gap: 14px;
+  }
+
+  .monos-navbar-actions {
+    gap: 8px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .monos-feed-layout {
+    display: block;
+    max-width: 760px;
+    padding-top: 12px;
+  }
+
+  .monos-left-sidebar {
+    display: none !important;
+  }
+
+  .monos-feed-main {
+    max-width: 680px;
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-width: 639px) {
+  .monos-navbar {
+    padding-inline: 14px;
+  }
+
+  .monos-navbar-actions {
+    gap: 2px;
+  }
+
+  .monos-navbar-actions > #btn-saved-collection-header,
+  .monos-navbar-actions > #btn-messenger-header,
+  .monos-navbar-actions > .relative:has(#btn-notifications-header),
+  .monos-navbar-actions > .relative:has(img[alt="Lê Minh Tuấn"]),
+  .monos-navbar-actions > #btn-create-post-header {
+    display: none;
+  }
+
+  .monos-feed-layout {
+    padding-inline: 12px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Apple-inspired visual system
+   Keep Monos' pink signature in the mark, but let the interface use Apple's
+   quiet hierarchy: system typography, near-white surfaces, restrained borders,
+   blue actions and soft depth instead of heavy decoration.
+   -------------------------------------------------------------------------- */
+:root {
+  --apple-bg: #f5f5f7;
+  --apple-surface: #ffffff;
+  --apple-ink: #1d1d1f;
+  --apple-muted: #6e6e73;
+  --apple-border: rgba(0, 0, 0, 0.08);
+  --apple-blue: #0071e3;
+  --apple-pink: #ea4c89;
+}
+
+.monos-app {
+  --font-sans: "Be Vietnam Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial,
+    sans-serif;
+  --font-display: "Be Vietnam Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial,
+    sans-serif;
+  --font-serif: "Be Vietnam Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial,
+    sans-serif;
+  background: var(--apple-bg) !important;
+  color: var(--apple-ink) !important;
+  letter-spacing: -0.01em;
+}
+
+.monos-app * {
+  font-family: inherit;
+}
+
+.monos-app,
+.monos-app button,
+.monos-app input,
+.monos-app textarea,
+.monos-app select {
+  font-family: "Be Vietnam Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial,
+    sans-serif;
+}
+
+.monos-app .font-display,
+.monos-app .font-serif {
+  font-family: "Be Vietnam Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial,
+    sans-serif !important;
+  letter-spacing: -0.035em;
+}
+
+.monos-app .font-mono {
+  font-family: "SF Mono", ui-monospace, Menlo, Monaco, Consolas, monospace !important;
+  letter-spacing: -0.01em;
+}
+
+.monos-app .bg-\[\#f8f8f8\],
+.monos-app [class~="bg-[#f8f8f8]"] {
+  background-color: var(--apple-bg) !important;
+}
+
+.monos-app .bg-\[\#f3f3f4\],
+.monos-app [class~="bg-[#f3f3f4]"] {
+  background-color: #f2f2f7 !important;
+}
+
+.monos-app .bg-white,
+.monos-app [class~="bg-white"] {
+  background-color: var(--apple-surface) !important;
+}
+
+.monos-app .text-\[\#0d0c22\],
+.monos-app [class~="text-[#0d0c22]"] {
+  color: var(--apple-ink) !important;
+}
+
+.monos-app .text-\[\#6e6d7a\],
+.monos-app .text-\[\#9e9ea7\],
+.monos-app .text-\[\#9e9ea7\] *,
+.monos-app [class~="text-[#6e6d7a]"],
+.monos-app [class~="text-[#9e9ea7]"] {
+  color: var(--apple-muted) !important;
+}
+
+.monos-app .bg-\[\#ea4c89\],
+.monos-app [class~="bg-[#ea4c89]"] {
+  background-color: var(--apple-blue) !important;
+}
+
+.monos-app .text-\[\#ea4c89\],
+.monos-app [class~="text-[#ea4c89]"] {
+  color: var(--apple-blue) !important;
+}
+
+.monos-app .border-\[\#e7e7e9\],
+.monos-app [class~="border-[#e7e7e9]"],
+.monos-app [class~="border-[#f3f3f4]"] {
+  border-color: var(--apple-border) !important;
+}
+
+.monos-app .shadow-xs,
+.monos-app .shadow-sm,
+.monos-app .shadow-md,
+.monos-app .shadow-lg,
+.monos-app .shadow-xl,
+.monos-app .shadow-2xl {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.045) !important;
+}
+
+.monos-app .rounded-3xl {
+  border-radius: 22px !important;
+}
+
+.monos-app .rounded-2xl {
+  border-radius: 17px !important;
+}
+
+.monos-app .rounded-xl {
+  border-radius: 13px !important;
+}
+
+.monos-app .monos-navbar {
+  height: 64px !important;
+  min-height: 64px;
+  background: rgba(255, 255, 255, 0.86) !important;
+  border-bottom: 1px solid var(--apple-border) !important;
+  box-shadow: 0 1px 12px rgba(0, 0, 0, 0.035) !important;
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+}
+
+/* The font switcher adds noise to the primary navigation. Vietnamese font
+   rendering is now fixed at the app level, so keep this control out of the UI. */
+.monos-app .monos-font-control {
+  display: none !important;
+}
+
+.monos-app .monos-navbar-left {
+  gap: 22px;
+}
+
+.monos-app .monos-navbar #monos-brand-logo > span:first-child {
+  font-size: 25px;
+  font-weight: 700;
+  letter-spacing: -0.055em;
+}
+
+.monos-app .monos-navbar #monos-brand-logo > span:last-child {
+  background-color: var(--apple-pink) !important;
+}
+
+.monos-app .monos-top-nav > button {
+  border-radius: 9px !important;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--apple-muted);
+}
+
+.monos-app .monos-top-nav > button:hover,
+.monos-app .monos-top-nav > button[class*="bg-[#f3f3f4]"] {
+  background: #f2f2f7 !important;
+  color: var(--apple-ink) !important;
+}
+
+.monos-app .monos-global-search input {
+  height: 36px !important;
+  background: #f2f2f7 !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  font-size: 13px;
+}
+
+.monos-app .monos-global-search input:focus {
+  background: #eaeaef !important;
+  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.14) !important;
+}
+
+.monos-app .monos-navbar-actions > button,
+.monos-app .monos-navbar-actions > .relative > button {
+  color: var(--apple-muted);
+}
+
+.monos-app .monos-navbar-actions > button:hover,
+.monos-app .monos-navbar-actions > .relative > button:hover {
+  background: #f2f2f7 !important;
+  color: var(--apple-ink) !important;
+}
+
+.monos-app .monos-feed-layout {
+  max-width: 1420px;
+  gap: 28px;
+  padding-top: 28px;
+}
+
+.monos-app .monos-left-sidebar,
+.monos-app .monos-right-sidebar {
+  scrollbar-width: thin;
+}
+
+.monos-app .monos-left-sidebar > div:first-child {
+  margin-bottom: 8px;
+}
+
+.monos-app .monos-left-sidebar button,
+.monos-app .monos-right-sidebar button {
+  transition: background-color 180ms ease, color 180ms ease, box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.monos-app .monos-left-sidebar button:hover,
+.monos-app .monos-right-sidebar button:hover {
+  transform: translateY(-1px);
+}
+
+.monos-app .monos-left-sidebar .bg-\[\#0d0c22\],
+.monos-app .monos-right-sidebar .bg-\[\#0d0c22\],
+.monos-app [class~="bg-[#0d0c22]"] {
+  background-color: var(--apple-ink) !important;
+}
+
+.monos-app main > .bg-\[\#0d0c22\],
+.monos-app main [class~="bg-[#0d0c22]"] {
+  box-shadow: 0 18px 40px rgba(29, 29, 31, 0.12) !important;
+}
+
+.monos-app main > .bg-\[\#0d0c22\] h2 {
+  letter-spacing: -0.04em;
+}
+
+.monos-app .monos-left-sidebar .bg-white,
+.monos-app .monos-right-sidebar .bg-white,
+.monos-app .monos-feed-main > .bg-white,
+.monos-app .monos-feed-main article {
+  border-color: var(--apple-border) !important;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.035) !important;
+}
+
+.monos-app .monos-feed-main article:hover {
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.065) !important;
+}
+
+.monos-app .monos-feed-main input,
+.monos-app .monos-feed-main textarea,
+.monos-app .monos-feed-main select {
+  border-color: var(--apple-border) !important;
+}
+
+.monos-app .monos-feed-main input:focus,
+.monos-app .monos-feed-main textarea:focus,
+.monos-app .monos-feed-main select:focus {
+  outline: 0 !important;
+  border-color: rgba(0, 113, 227, 0.55) !important;
+  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.12) !important;
+}
+
+.monos-app .monos-feed-main .bg-gradient-to-r,
+.monos-app .monos-feed-main .bg-gradient-to-br {
+  background-image: none !important;
+}
+
+.monos-app .monos-feed-main .bg-gradient-to-r {
+  background-color: var(--apple-ink) !important;
+}
+
+.monos-app .monos-feed-main .bg-gradient-to-br {
+  background-color: #fff !important;
+}
+
+@media (max-width: 1023px) {
+  .monos-app .monos-feed-layout {
+    padding-top: 18px;
+  }
+}
+
+@media (max-width: 639px) {
+  .monos-app .monos-navbar {
+    height: 60px !important;
+    min-height: 60px;
+  }
+
+  .monos-app .monos-navbar #monos-brand-logo > span:first-child {
+    font-size: 23px;
+  }
+
+  .monos-app .monos-feed-layout {
+    padding-top: 12px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Simple B+ catalog
+   The product catalog is the default landing surface: one search field,
+   one category row, and a calm, scannable product grid.
+   -------------------------------------------------------------------------- */
+.bplus-catalog {
+  min-height: calc(100vh - 64px);
+  padding: 58px 24px 36px;
+  background: var(--apple-bg);
+  color: var(--apple-ink);
+}
+
+.bplus-catalog-inner {
+  width: min(1480px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.bplus-catalog-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+  margin-bottom: 34px;
+}
+
+.bplus-kicker {
+  display: inline-block;
+  margin-bottom: 12px;
+  color: var(--apple-blue);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.bplus-catalog-header h1 {
+  margin: 0;
+  color: var(--apple-ink);
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.055em;
+}
+
+.bplus-catalog-header p {
+  max-width: 620px;
+  margin: 14px 0 0;
+  color: var(--apple-muted);
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.bplus-source-link,
+.bplus-catalog-note a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--apple-blue);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.bplus-source-link:hover,
+.bplus-catalog-note a:hover {
+  text-decoration: underline;
+}
+
+.bplus-catalog-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 16px;
+}
+
+.bplus-search {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: min(520px, 100%);
+  min-height: 48px;
+  padding: 0 15px;
+  color: var(--apple-muted);
+  background: #fff;
+  border: 1px solid var(--apple-border);
+  border-radius: 14px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.025);
+}
+
+.bplus-search:focus-within {
+  border-color: rgba(0, 113, 227, 0.5);
+  box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.11);
+}
+
+.bplus-search input {
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  color: var(--apple-ink);
+  font-size: 14px;
+  background: transparent;
+  border: 0;
+  outline: 0;
+}
+
+.bplus-search input::placeholder {
+  color: #8e8e93;
+}
+
+.bplus-search > button {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  color: var(--apple-muted);
+  font-size: 21px;
+  line-height: 1;
+  border-radius: 50%;
+}
+
+.bplus-search > button:hover {
+  color: var(--apple-ink);
+  background: #f2f2f7;
+}
+
+.bplus-result-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--apple-muted);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.bplus-category-list {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 28px;
+  scrollbar-width: none;
+}
+
+.bplus-category-list::-webkit-scrollbar {
+  display: none;
+}
+
+.bplus-category-list button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 35px;
+  padding: 0 13px;
+  color: var(--apple-muted);
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  background: #fff;
+  border: 1px solid var(--apple-border);
+  border-radius: 999px;
+  transition: all 180ms ease;
+}
+
+.bplus-category-list button span {
+  color: #8e8e93;
+  font-size: 11px;
+}
+
+.bplus-category-list button:hover {
+  color: var(--apple-ink);
+  border-color: rgba(0, 113, 227, 0.32);
+  transform: translateY(-1px);
+}
+
+.bplus-category-list button.is-active {
+  color: #fff;
+  background: var(--apple-ink);
+  border-color: var(--apple-ink);
+}
+
+.bplus-category-list button.is-active span {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.bplus-product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.bplus-product-card {
+  min-width: 0;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid var(--apple-border);
+  border-radius: 20px;
+  box-shadow: 0 7px 24px rgba(0, 0, 0, 0.035);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.bplus-product-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 36px rgba(0, 0, 0, 0.08);
+}
+
+.bplus-product-image {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1.18;
+  overflow: hidden;
+  padding: 0;
+  text-align: left;
+  background: #f2f2f7;
+  border: 0;
+  cursor: pointer;
+}
+
+.bplus-product-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 500ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.bplus-product-card:hover .bplus-product-image img {
+  transform: scale(1.035);
+}
+
+.bplus-verified {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 8px;
+  color: var(--apple-ink);
+  font-size: 10px;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 999px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.bplus-verified svg {
+  color: #248a3d;
+}
+
+.bplus-image-action {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  padding: 8px 11px;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  background: rgba(29, 29, 31, 0.82);
+  border-radius: 999px;
+  opacity: 0;
+  transform: translateY(5px);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.bplus-product-card:hover .bplus-image-action,
+.bplus-product-image:focus-visible .bplus-image-action {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.bplus-product-info {
+  padding: 16px;
+}
+
+.bplus-product-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+  color: var(--apple-muted);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.045em;
+}
+
+.bplus-product-meta span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bplus-product-meta span:last-child {
+  color: #8e8e93;
+  font-family: "SF Mono", ui-monospace, Menlo, monospace;
+  font-size: 9px;
+  text-transform: none;
+}
+
+.bplus-product-title-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.bplus-product-title-row h2 {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  color: var(--apple-ink);
+  font-size: 17px;
+  font-weight: 650;
+  line-height: 1.18;
+  letter-spacing: -0.03em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bplus-save-button {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 29px;
+  height: 29px;
+  margin-top: -4px;
+  color: #8e8e93;
+  border-radius: 50%;
+}
+
+.bplus-save-button:hover,
+.bplus-save-button.is-saved {
+  color: var(--apple-blue);
+  background: #eef6ff;
+}
+
+.bplus-product-info > p {
+  display: -webkit-box;
+  min-height: 38px;
+  margin: 9px 0 15px;
+  overflow: hidden;
+  color: var(--apple-muted);
+  font-size: 12px;
+  line-height: 1.55;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.bplus-product-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--apple-border);
+}
+
+.bplus-product-footer span {
+  overflow: hidden;
+  color: #8e8e93;
+  font-size: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bplus-product-footer button {
+  flex: 0 0 auto;
+  color: var(--apple-blue);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.bplus-product-footer button:hover {
+  text-decoration: underline;
+}
+
+.bplus-empty-state {
+  display: grid;
+  place-items: center;
+  min-height: 270px;
+  padding: 42px 24px;
+  color: var(--apple-muted);
+  text-align: center;
+  background: #fff;
+  border: 1px solid var(--apple-border);
+  border-radius: 20px;
+}
+
+.bplus-empty-state svg {
+  margin-bottom: 12px;
+  color: var(--apple-blue);
+}
+
+.bplus-empty-state h2 {
+  margin: 0;
+  color: var(--apple-ink);
+  font-size: 18px;
+}
+
+.bplus-empty-state p {
+  margin: 8px 0 18px;
+  font-size: 13px;
+}
+
+.bplus-empty-state button,
+.bplus-load-more button {
+  min-height: 40px;
+  padding: 0 16px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  background: var(--apple-blue);
+  border-radius: 999px;
+}
+
+.bplus-empty-state button:hover,
+.bplus-load-more button:hover {
+  background: #0077ed;
+}
+
+.bplus-load-more {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  padding: 34px 0 8px;
+}
+
+.bplus-load-more span {
+  color: var(--apple-muted);
+  font-size: 12px;
+}
+
+.bplus-catalog-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding-top: 38px;
+  color: var(--apple-muted);
+  font-size: 12px;
+}
+
+@media (max-width: 1080px) {
+  .bplus-product-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .bplus-catalog {
+    padding: 38px 16px 30px;
+  }
+
+  .bplus-catalog-header {
+    display: block;
+    margin-bottom: 26px;
+  }
+
+  .bplus-catalog-header p {
+    font-size: 14px;
+  }
+
+  .bplus-source-link {
+    margin-top: 18px;
+  }
+
+  .bplus-catalog-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .bplus-search {
+    width: 100%;
+  }
+
+  .bplus-product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 13px;
+  }
+
+  .bplus-product-info {
+    padding: 13px;
+  }
+
+  .bplus-product-title-row h2 {
+    font-size: 15px;
+  }
+
+  .bplus-product-meta {
+    display: block;
+    line-height: 1.5;
+  }
+
+  .bplus-product-meta span:last-child {
+    display: block;
+    margin-top: 2px;
+  }
+}
+
+@media (max-width: 430px) {
+  .bplus-product-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .bplus-product-image {
+    aspect-ratio: 1.35;
+  }
+
+  .bplus-product-info > p {
+    min-height: auto;
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   Shared Shots layout for the social and Furniture Journal surfaces
+   Keep the content model and interactions intact, but give every surface the
+   same calm canvas, toolbar, card rhythm and restrained Apple-style depth.
+   -------------------------------------------------------------------------- */
+.monos-social-page,
+.monos-magazine-page,
+.monos-archive-page {
+  background: var(--apple-bg) !important;
+  color: var(--apple-ink);
+}
+
+/* Social network: use the same content canvas and typography as Shots. */
+.monos-social-page {
+  font-family: "Be Vietnam Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial,
+    sans-serif;
+  letter-spacing: -0.01em;
+}
+
+.monos-social-page .font-display,
+.monos-social-page .font-serif {
+  font-family: "Be Vietnam Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial,
+    sans-serif !important;
+  letter-spacing: -0.035em;
+}
+
+.monos-social-page .monos-social-layout {
+  display: block !important;
+  align-items: start;
+  width: min(1528px, calc(100% - 48px)) !important;
+  max-width: none !important;
+  margin: 0 auto;
+  padding: 48px 24px 42px !important;
+  gap: 28px !important;
+}
+
+.monos-social-page .monos-left-sidebar {
+  display: none !important;
+  width: auto !important;
+  max-width: none !important;
+  height: calc(100vh - 112px) !important;
+  top: 88px !important;
+  padding: 14px 12px 24px 0 !important;
+  border: 0 !important;
+  scrollbar-width: thin;
+}
+
+.monos-social-page .monos-right-sidebar {
+  display: none !important;
+}
+
+.monos-social-page .monos-social-main {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  min-width: 0;
+}
+
+.monos-social-page .monos-left-sidebar > div:first-child,
+.monos-social-page .monos-left-sidebar .mt-4,
+.monos-social-page .monos-left-sidebar .mt-3 {
+  margin-top: 0;
+}
+
+.monos-social-page .monos-left-sidebar > div {
+  min-width: 0;
+}
+
+.monos-social-page .monos-social-intro {
+  margin-bottom: 4px;
+  padding: 28px !important;
+  color: var(--apple-ink) !important;
+  background: var(--apple-surface) !important;
+  border: 1px solid var(--apple-border) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.035) !important;
+}
+
+.monos-social-page .monos-social-intro .text-white,
+.monos-social-page .monos-social-intro [class~="text-white"] {
+  color: var(--apple-ink) !important;
+}
+
+.monos-social-page .monos-social-intro [class~="text-white/70"],
+.monos-social-page .monos-social-intro [class~="text-white/80"] {
+  color: var(--apple-muted) !important;
+}
+
+.monos-social-page .monos-social-intro .absolute {
+  display: none !important;
+}
+
+.monos-social-page .monos-social-intro h2 {
+  max-width: 680px;
+  font-size: clamp(22px, 3vw, 30px);
+  line-height: 1.12;
+}
+
+.monos-social-page .monos-social-intro p {
+  max-width: 680px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.monos-social-page .monos-social-featured {
+  padding: 8px 0 2px;
+}
+
+.monos-social-page .monos-social-featured > div:first-child {
+  padding: 0 2px;
+}
+
+.monos-social-page .monos-social-featured > div:last-child {
+  gap: 12px;
+  padding-bottom: 8px;
+}
+
+.monos-social-page .monos-social-featured > div:last-child > div {
+  border-radius: 18px !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.035) !important;
+}
+
+.monos-social-page .monos-social-magazine-banner {
+  padding: 20px 22px !important;
+  color: var(--apple-ink) !important;
+  background: var(--apple-surface) !important;
+  border: 1px solid var(--apple-border) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.035) !important;
+}
+
+.monos-social-page .monos-social-magazine-banner .text-white,
+.monos-social-page .monos-social-magazine-banner [class~="text-white"] {
+  color: var(--apple-ink) !important;
+}
+
+.monos-social-page .monos-social-magazine-banner [class~="text-white/70"],
+.monos-social-page .monos-social-magazine-banner [class~="text-white/80"] {
+  color: var(--apple-muted) !important;
+}
+
+.monos-social-page .monos-social-magazine-banner .absolute {
+  display: none !important;
+}
+
+.monos-social-page .monos-social-filter {
+  margin-top: 0;
+  border-radius: 17px !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.028) !important;
+}
+
+.monos-social-page .monos-social-filter button {
+  min-height: 34px;
+  font-size: 12px;
+}
+
+.monos-social-page .monos-social-search-state {
+  color: var(--apple-blue) !important;
+  background: #eef6ff !important;
+  border: 1px solid rgba(0, 113, 227, 0.14) !important;
+}
+
+.monos-social-page .monos-social-posts {
+  padding-top: 2px;
+}
+
+.monos-social-page .monos-post-card {
+  padding: 20px !important;
+  border-radius: 20px !important;
+  border-color: var(--apple-border) !important;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.035) !important;
+}
+
+.monos-social-page .monos-post-card:hover {
+  box-shadow: 0 15px 36px rgba(0, 0, 0, 0.075) !important;
+}
+
+.monos-social-page .monos-post-card > [class~="bg-[#f8f8f8]"] {
+  background: #f2f2f7 !important;
+  border-color: var(--apple-border) !important;
+}
+
+.monos-social-page .monos-social-endcard {
+  border-radius: 20px !important;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.035) !important;
+}
+
+/* Furniture Journal: the same white surfaces and filter rhythm as Shots. */
+.monos-magazine-page {
+  min-height: calc(100vh - 64px);
+  padding-bottom: 48px !important;
+}
+
+.monos-magazine-page .monos-magazine-hero {
+  padding: 52px 24px 76px !important;
+  color: var(--apple-ink) !important;
+  background: var(--apple-surface) !important;
+  border: 0 !important;
+}
+
+.monos-magazine-page .monos-magazine-hero .absolute {
+  display: none !important;
+}
+
+.monos-magazine-page .monos-magazine-hero-inner {
+  width: min(1480px, calc(100% - 48px)) !important;
+  max-width: none !important;
+}
+
+.monos-magazine-page .monos-magazine-hero .text-white,
+.monos-magazine-page .monos-magazine-hero [class~="text-white"] {
+  color: var(--apple-ink) !important;
+}
+
+.monos-magazine-page .monos-magazine-hero [class~="text-white/60"],
+.monos-magazine-page .monos-magazine-hero [class~="text-white/70"],
+.monos-magazine-page .monos-magazine-hero [class~="text-white/80"] {
+  color: var(--apple-muted) !important;
+}
+
+.monos-magazine-page .monos-magazine-hero h1 {
+  max-width: 850px;
+  font-size: clamp(32px, 5vw, 56px);
+  line-height: 1.05;
+  color: var(--apple-ink) !important;
+}
+
+.monos-magazine-page .monos-magazine-hero p {
+  max-width: 700px;
+  color: var(--apple-muted) !important;
+}
+
+.monos-magazine-page .monos-magazine-hero button {
+  color: var(--apple-muted);
+  background: #f2f2f7;
+  border: 1px solid var(--apple-border);
+}
+
+.monos-magazine-page .monos-magazine-hero button:hover {
+  color: var(--apple-ink);
+  background: #eaeaef;
+}
+
+.monos-magazine-page .monos-magazine-hero button[class~="bg-white"] {
+  color: #fff !important;
+  background: var(--apple-ink) !important;
+  border-color: var(--apple-ink) !important;
+}
+
+.monos-magazine-page .monos-magazine-content {
+  width: min(1480px, calc(100% - 48px)) !important;
+  max-width: none !important;
+  margin: -28px auto 0 !important;
+  padding: 0 24px !important;
+}
+
+.monos-magazine-page .monos-magazine-toolbar {
+  position: relative;
+  z-index: 2;
+  flex-wrap: wrap;
+  align-items: center;
+  border-radius: 17px !important;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.045) !important;
+}
+
+.monos-magazine-page .monos-magazine-toolbar > div:first-child {
+  flex: 1 1 600px;
+  min-width: 0;
+}
+
+.monos-magazine-page .monos-magazine-toolbar > .relative {
+  display: block !important;
+  flex: 0 1 250px;
+  min-width: 220px;
+}
+
+.monos-magazine-page .monos-magazine-toolbar input {
+  background: #f2f2f7 !important;
+  border-color: transparent !important;
+}
+
+.monos-magazine-page .monos-magazine-toolbar input:focus {
+  background: #fff !important;
+  border-color: rgba(0, 113, 227, 0.42) !important;
+  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1) !important;
+}
+
+.monos-magazine-page .monos-magazine-toolbar button {
+  min-height: 35px;
+  border: 1px solid transparent;
+}
+
+.monos-magazine-page .monos-magazine-featured,
+.monos-magazine-page .monos-magazine-card {
+  border-radius: 20px !important;
+  border-color: var(--apple-border) !important;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.035) !important;
+}
+
+.monos-magazine-page .monos-magazine-featured:hover,
+.monos-magazine-page .monos-magazine-card:hover {
+  box-shadow: 0 15px 36px rgba(0, 0, 0, 0.075) !important;
+}
+
+.monos-magazine-page .monos-magazine-featured > .grid {
+  min-height: 440px;
+}
+
+.monos-magazine-page .monos-magazine-grid {
+  gap: 20px !important;
+}
+
+.monos-magazine-page .monos-magazine-card {
+  min-width: 0;
+}
+
+.monos-magazine-page .monos-magazine-card > div:first-child {
+  flex: 1 1 auto;
+}
+
+.monos-magazine-page .monos-magazine-card [class~="aspect-[16/10]"] {
+  aspect-ratio: 1.18;
+}
+
+.monos-magazine-page .monos-magazine-card [class~="px-5"] {
+  padding-inline: 18px !important;
+}
+
+.monos-magazine-page .monos-magazine-card > div:last-child {
+  padding: 14px 18px !important;
+}
+
+/* Archive shares the exact canvas and product-card language with Shots. */
+.monos-archive-page {
+  width: min(1480px, calc(100% - 48px)) !important;
+  max-width: none !important;
+  padding: 48px 24px 42px !important;
+}
+
+.monos-archive-page .monos-archive-header {
+  padding: 28px !important;
+  border-radius: 20px !important;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.035) !important;
+}
+
+.monos-archive-page .monos-archive-header > div:first-child {
+  min-width: 0;
+}
+
+.monos-archive-page .monos-archive-header h1 {
+  font-size: clamp(30px, 4vw, 48px);
+  line-height: 1.05;
+}
+
+.monos-archive-page .monos-archive-header input {
+  background: #f2f2f7 !important;
+}
+
+.monos-archive-page .bplus-product-grid {
+  gap: 20px !important;
+}
+
+.monos-archive-page .bplus-product-card {
+  border-radius: 20px !important;
+}
+
+.monos-archive-page .bplus-product-card:hover {
+  transform: translateY(-3px);
+}
+
+@media (max-width: 1023px) {
+  .monos-social-page .monos-social-layout {
+    display: block !important;
+    width: calc(100% - 64px) !important;
+    padding: 28px 16px 34px !important;
+  }
+
+  .monos-social-page .monos-left-sidebar {
+    display: none !important;
+  }
+
+  .monos-social-page .monos-social-main {
+    max-width: 860px !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .monos-social-page .monos-social-layout {
+    width: calc(100% - 48px) !important;
+  }
+
+  .monos-social-page .monos-social-intro,
+  .monos-social-page .monos-post-card {
+    padding: 18px !important;
+  }
+
+  .monos-magazine-page .monos-magazine-hero {
+    padding: 38px 16px 62px !important;
+  }
+
+  .monos-magazine-page .monos-magazine-content,
+  .monos-archive-page {
+    padding-inline: 16px !important;
+  }
+
+  .monos-magazine-page .monos-magazine-content {
+    margin-top: -22px !important;
+  }
+
+  .monos-magazine-page .monos-magazine-toolbar > div:first-child,
+  .monos-magazine-page .monos-magazine-toolbar > .relative {
+    flex-basis: 100%;
+    min-width: 0;
+  }
+
+  .monos-magazine-page .monos-magazine-toolbar > .relative {
+    order: -1;
+  }
+
+  .monos-magazine-page .monos-magazine-featured > .grid {
+    min-height: 0;
+  }
+
+  .monos-archive-page {
+    padding-top: 30px !important;
+    padding-bottom: 30px !important;
+  }
+
+  .monos-archive-page .monos-archive-header {
+    padding: 20px !important;
+  }
+}
+
+
+/* Featured product remains visible at the top of Shots without becoming a
+   second navigation system. It uses the same card language as the catalog. */
+.shots-featured-product {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.82fr) minmax(0, 1.18fr);
+  min-height: 250px;
+  margin: -4px 0 28px;
+  overflow: hidden;
+  background: var(--apple-surface);
+  border: 1px solid var(--apple-border);
+  border-radius: 20px;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.035);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.shots-featured-product:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 36px rgba(0, 0, 0, 0.075);
+}
+
+.shots-featured-image {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-height: 250px;
+  overflow: hidden;
+  padding: 0;
+  text-align: left;
+  background: #f2f2f7;
+  border: 0;
+  cursor: pointer;
+}
+
+.shots-featured-image:disabled {
+  cursor: default;
+}
+
+.shots-featured-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 500ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.shots-featured-product:hover .shots-featured-image img {
+  transform: scale(1.035);
+}
+
+.shots-featured-details {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 22px;
+  padding: 28px;
+}
+
+.shots-featured-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--apple-blue);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.shots-featured-meta span:last-child {
+  padding: 6px 9px;
+  color: var(--apple-muted);
+  font-size: 9px;
+  letter-spacing: 0.04em;
+  background: #f2f2f7;
+  border-radius: 999px;
+}
+
+.shots-featured-details h2 {
+  margin: 0;
+  color: var(--apple-ink);
+  font-size: clamp(24px, 3vw, 34px);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.045em;
+}
+
+.shots-featured-details p {
+  max-width: 580px;
+  margin: 0;
+  color: var(--apple-muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.shots-featured-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding-top: 14px;
+  color: var(--apple-muted);
+  font-size: 11px;
+  border-top: 1px solid var(--apple-border);
+}
+
+.shots-featured-footer > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.shots-featured-footer button {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 6px;
+  color: var(--apple-blue);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.shots-featured-footer button:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 760px) {
+  .shots-featured-product {
+    grid-template-columns: 1fr;
+    margin-bottom: 24px;
+  }
+
+  .shots-featured-image {
+    min-height: 0;
+    aspect-ratio: 1.45;
+  }
+
+  .shots-featured-details {
+    gap: 16px;
+    padding: 20px;
+  }
+
+  .shots-featured-details h2 {
+    font-size: 24px;
+  }
+}
+
+
+/* Square illustration system: thumbnails and catalog shots stay consistent
+   across every listing, while large editorial/canvas imagery keeps its role. */
+.bplus-product-image,
+.monos-magazine-page .monos-magazine-card [class~="aspect-[16/10]"],
+.monos-magazine-page .monos-magazine-card [class~="aspect-square"] {
+  aspect-ratio: 1 / 1 !important;
+}
+
+.monos-social-page .monos-social-featured > div:last-child > div {
+  width: 144px !important;
+  height: 144px !important;
+  aspect-ratio: 1 / 1 !important;
+}
+
+.monos-social-page .monos-social-featured > div:last-child > div > div:first-child {
+  height: 65% !important;
+}
+
+.monos-social-page .monos-social-featured > div:last-child > div > div:nth-child(2) {
+  height: 35% !important;
+}
+
+.monos-social-page .monos-post-card > [class~="rounded-2xl"] > [class~="aspect-[16/10]"] {
+  aspect-ratio: 1 / 1 !important;
+}
+
+.monos-social-page .monos-post-card > [class~="rounded-2xl"] > [class~="aspect-[16/10]"] img {
+  height: 100% !important;
+}
+
+.monos-magazine-page .monos-magazine-card [class~="aspect-square"] {
+  aspect-ratio: 1 / 1 !important;
+}
+
+/* Shared page canvas: make secondary screens feel like the Shots surface. */
+.monos-groups-page,
+.monos-designers-page,
+.monos-scan-page {
+  width: min(1480px, calc(100% - 48px)) !important;
+  max-width: none !important;
+  padding: 48px 24px 42px !important;
+}
+
+.monos-groups-page > div,
+.monos-designers-page > div:first-child,
+.monos-scan-page > div:first-child,
+.monos-groups-page > div[class~="bg-white"],
+.monos-designers-page > div[class~="bg-white"],
+.monos-scan-page > div[class~="bg-white"] {
+  border-color: var(--apple-border) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.035) !important;
+}
+
+.monos-groups-page > div:first-child {
+  display: flex;
+  padding: 8px !important;
+  background: var(--apple-surface);
+  border: 1px solid var(--apple-border);
+  border-radius: 17px !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.028);
+}
+
+.monos-groups-page > div:first-child button {
+  min-height: 35px;
+}
+
+.monos-designers-page > div:first-child,
+.monos-scan-page > div:first-child {
+  padding: 28px !important;
+}
+
+.monos-designers-page > div:last-child,
+.monos-scan-page > div:nth-child(2) {
+  gap: 20px !important;
+}
+
+.monos-designers-page > div:last-child > div,
+.monos-scan-page > div:nth-child(2) > div {
+  border-radius: 20px !important;
+  border-color: var(--apple-border) !important;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.035) !important;
+}
+
+.monos-designers-page > div:last-child > div:hover {
+  box-shadow: 0 15px 36px rgba(0, 0, 0, 0.075) !important;
+}
+
+.monos-groups-page img,
+.monos-designers-page img,
+.monos-scan-page img {
+  border-color: var(--apple-border);
+}
+
+@media (min-width: 640px) {
+  .monos-social-page .monos-social-featured > div:last-child > div {
+    width: 160px !important;
+    height: 160px !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .monos-groups-page,
+  .monos-designers-page,
+  .monos-scan-page {
+    padding: 30px 16px !important;
+  }
+
+  .monos-designers-page > div:first-child,
+  .monos-scan-page > div:first-child {
+    padding: 20px !important;
+  }
+
+  .monos-social-page .monos-social-featured > div:last-child > div {
+    width: 136px !important;
+    height: 136px !important;
+  }
+}
+
+/* Restore only the social-specific tabs that are not duplicated in the main
+   navigator: Community, Designers and Scan AI. */
+.monos-social-secondary-nav {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: min(1528px, calc(100% - 48px));
+  margin: 22px auto 0;
+  padding: 7px 9px;
+  background: var(--apple-surface);
+  border: 1px solid var(--apple-border);
+  border-radius: 17px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.028);
+}
+
+.monos-social-secondary-label {
+  flex: 0 0 auto;
+  padding: 0 5px;
+  color: var(--apple-muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.monos-social-secondary-tabs {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.monos-social-secondary-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.monos-social-secondary-tabs button {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 7px;
+  min-height: 36px;
+  padding: 0 13px;
+  color: var(--apple-muted);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease,
+    transform 180ms ease;
+}
+
+.monos-social-secondary-tabs button:hover,
+.monos-social-secondary-tabs button:focus-visible {
+  color: var(--apple-ink);
+  background: #f2f2f7;
+  border-color: var(--apple-border);
+  transform: translateY(-1px);
+  outline: none;
+}
+
+.monos-social-secondary-tabs button svg {
+  color: var(--apple-blue);
+}
+
+@media (max-width: 1023px) {
+  .monos-social-secondary-nav {
+    width: calc(100% - 64px);
+    margin-top: 18px;
+  }
+}
+
+@media (max-width: 760px) {
+  .monos-social-secondary-nav {
+    width: calc(100% - 48px);
+    margin-top: 14px;
+    padding: 6px;
+  }
+
+  .monos-social-secondary-tabs {
+    width: 100%;
+  }
+}
+
+@media (max-width: 520px) {
+  .monos-social-secondary-label {
+    display: none;
+  }
+}
+
+/* Harmonize ObjectArchiveView with ShotsProductView */
+.monos-archive-catalog {
+  min-height: calc(100vh - 64px);
+  padding: 58px 24px 36px;
+  background: var(--apple-bg);
+  color: var(--apple-ink);
+}
+
+/* Harmonize Designer directory and Scan page headers with Shots */
+.monos-designers-page .bplus-kicker,
+.monos-scan-page .bplus-kicker,
+.monos-groups-page .bplus-kicker {
+  display: inline-block;
+  margin-bottom: 8px;
+  color: var(--apple-blue);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+/* Ensure all thumbnail illustrations on all cards are uniform 1:1 square */
+.monos-designers-page .aspect-square,
+.monos-scan-page .aspect-square,
+.monos-groups-page .aspect-square,
+.monos-social-page .aspect-square,
+.monos-magazine-page .aspect-square {
+  aspect-ratio: 1 / 1 !important;
+}
+
+/* Uniform card styling across all pages */
+.monos-designers-page [class*="rounded-3xl"],
+.monos-scan-page [class*="rounded-3xl"],
+.monos-groups-page [class*="rounded-3xl"] {
+  border-radius: 20px !important;
+  background: var(--apple-surface) !important;
+  border: 1px solid var(--apple-border) !important;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.028) !important;
+}
+
