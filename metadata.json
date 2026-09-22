@@ -1,0 +1,8 @@
+{
+  "name": "Monos Platform",
+  "description": "Nền tảng tạp chí và mạng xã hội câu chuyện đồ vật phong cách Dribbble, hồ sơ định danh Object Profile, truy xuất nguồn gốc và mạng lưới thiết kế nội thất Việt Nam.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

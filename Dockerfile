@@ -1,16 +1,12 @@
 # syntax=docker/dockerfile:1
-FROM node:22-bookworm-slim AS build
-WORKDIR /app
-COPY package.json package-lock.json ./
-RUN npm ci
-COPY index.html vite.config.ts tsconfig.json ./
-COPY src ./src
-COPY public ./public
-RUN npm run build
-
 FROM nginx:1.27-alpine
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=build /app/dist-monos /usr/share/nginx/html
+COPY mirrored_pages /usr/share/nginx/html/mirrored_pages
+COPY _next /usr/share/nginx/html/_next
+COPY public /usr/share/nginx/html/public
+COPY site.css /usr/share/nginx/html/site.css
+COPY *.jpg /usr/share/nginx/html/
+COPY *.png /usr/share/nginx/html/
 RUN apk add --no-cache wget \
     && chmod -R a+rX /usr/share/nginx/html
 EXPOSE 80
