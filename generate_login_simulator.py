@@ -1,0 +1,429 @@
+import re
+
+header_html = '''<header class="site-header"><a class="brand" href="/" aria-label="Monos, về trang chủ"><span class="logo-mark" aria-hidden="true"><span></span><span></span></span><span class="brand-word">MONOS</span></a><nav class="main-nav " aria-label="Điều hướng chính"><a class="nav-link " href="/stories">Câu chuyện đồ vật</a><a class="nav-link " href="/feed">Feed</a><div class="nav-dropdown is-active"><a class="nav-link nav-parent active" href="/network" aria-haspopup="true">Hành trình<span class="nav-caret" aria-hidden="true">⌄</span></a><div class="nav-submenu" aria-label="Hành trình — danh mục"><a class="nav-sublink active" href="/designers">Designer</a><a class="nav-sublink " href="/objects">Đồ vật</a><a class="nav-sublink " href="/factories">Nhà máy</a><a class="nav-sublink " href="/brands">Brand</a><a class="nav-sublink " href="/spaces">Không gian</a></div></div><div class="nav-dropdown "><a class="nav-link nav-parent " href="/materials" aria-haspopup="true">Thư viện<span class="nav-caret" aria-hidden="true">⌄</span></a><div class="nav-submenu" aria-label="Thư viện — danh mục"><a class="nav-sublink " href="/materials">Vật liệu</a></div></div><a class="nav-link " href="/provenance">Nguồn gốc</a></nav><div class="header-actions"><a class="icon-button search-trigger" href="/feed" aria-label="Mở Monos Feed"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-activity" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path></svg></a><a class="login-link" href="/login" style="font-size:13px;font-weight:600;color:var(--ink);margin-right:12px;text-decoration:none;">Đăng nhập</a><a class="submit-button header-submit" href="/signup">Đăng ký hồ sơ <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right" aria-hidden="true"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a><button class="icon-button menu-trigger" type="button" aria-label="Mở menu" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu" aria-hidden="true"><path d="M4 5h16"></path><path d="M4 12h16"></path><path d="M4 19h16"></path></svg></button></div></header>'''
+
+feed_strip_html = '''<div class="feed-strip is-compact" aria-label="Dòng hoạt động Monos"><a class="feed-strip-lead" href="/feed"><span class="feed-live-dot"></span><span>Monos Feed</span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right" aria-hidden="true"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a><div class="feed-strip-items"><div class="feed-strip-track"><a class="feed-strip-item" href="/feed#feed-ambie"><span>Object Profile / 012</span><strong>Dragonfly Glow vừa mở hồ sơ mới.</strong><small>vừa xong</small></a><a class="feed-strip-item" href="/feed#feed-cloudy"><span>Object Profile / 001</span><strong>Cloudy vừa mở thêm một mốc provenance.</strong><small>12 phút trước</small></a><a class="feed-strip-item" href="/feed#feed-factory"><span>Factory Directory</span><strong>F-Studio cập nhật năng lực chế tác bàn Console.</strong><small>38 phút trước</small></a><a class="feed-strip-item" href="/feed#feed-designer"><span>Designer Community</span><strong>Cộng đồng designer đã mở danh sách hồ sơ mới.</strong><small>vừa xong</small></a><a class="feed-strip-item" href="/feed#feed-material"><span>Material Intelligence</span><strong>Gỗ tự nhiên &amp; Kết cấu module.</strong><small>1 giờ trước</small></a><a class="feed-strip-item" href="/feed#feed-brief"><span>Open Brief</span><strong>Đang tìm partner cho một prototype nhỏ.</strong><small>Hôm qua</small></a></div></div><a class="feed-strip-open" href="/feed">Mở feed <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right" aria-hidden="true"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a></div>'''
+
+footer_html = '''<footer class="site-footer"><a class="footer-brand" href="/"><span class="logo-mark" aria-hidden="true"><span></span><span></span></span><span>MONOS</span></a><p>Stories of the things we live with.</p><div class="footer-links"><a href="/stories">Câu chuyện đồ vật</a><a href="/feed">Feed</a><a href="/network">Hành trình</a><a href="/designers">Designer</a><a href="/objects">Đồ vật</a><a href="/factories">Nhà máy</a><a href="/brands">Brand</a><a href="/spaces">Không gian</a><a href="/materials">Thư viện</a><a href="/materials">Vật liệu</a><a href="/provenance">Nguồn gốc</a></div><span class="footer-credit">© 2026 Monos / Issue 01</span></footer>'''
+
+html_login = f'''<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charSet="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="/_next/static/css/index.B8WgWaCR.css" data-rsc-css-href="/_next/static/css/index.B8WgWaCR.css" data-precedence="vite-rsc/importer-resources"/>
+<title>Đăng nhập — Monos</title>
+<meta name="description" content="Đăng nhập tài khoản Monos hoặc giả lập nhanh với các loại tài khoản mẫu."/>
+<link rel="shortcut icon" href="/favicon.svg"/>
+<link rel="icon" href="/favicon.svg"/>
+<style>
+.login-wrap {{
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+}}
+.login-card {{
+  background: var(--white, #ffffff);
+  border-top: 4px solid var(--terracotta, #c85a32);
+  border-radius: 12px;
+  padding: 40px 44px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+  border-left: 1px solid #e7e5df;
+  border-right: 1px solid #e7e5df;
+  border-bottom: 1px solid #e7e5df;
+}}
+@media (max-width: 640px) {{
+  .login-wrap {{
+    padding: 24px 14px 60px;
+  }}
+  .login-card {{
+    padding: 24px 18px;
+  }}
+}}
+
+.login-header {{
+  text-align: center;
+  margin-bottom: 28px;
+}}
+.login-header .eyebrow {{
+  justify-content: center;
+  margin-bottom: 8px;
+}}
+.login-header h1 {{
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: -0.025em;
+  margin: 0 0 8px 0;
+}}
+.login-header h1 em {{
+  font-style: italic;
+  font-weight: 400;
+  color: var(--terracotta, #c85a32);
+}}
+.login-header p {{
+  font-size: 13.5px;
+  color: #666;
+  max-width: 480px;
+  margin: 0 auto;
+  line-height: 1.45;
+}}
+
+/* Quick Account Simulator Section */
+.sim-section {{
+  background: #fdfbf7;
+  border: 1px solid #ebe6dc;
+  border-radius: 10px;
+  padding: 16px 18px;
+  margin-bottom: 24px;
+}}
+.sim-header {{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}}
+.sim-title {{
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--terracotta, #c85a32);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}}
+.sim-hint {{
+  font-size: 11px;
+  color: #777;
+}}
+.sim-grid {{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}}
+@media (max-width: 600px) {{
+  .sim-grid {{
+    grid-template-columns: repeat(2, 1fr);
+  }}
+}}
+.sim-btn {{
+  border: 1px solid #dfdeda;
+  background: #ffffff;
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-family: inherit;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}}
+.sim-btn:hover {{
+  border-color: var(--ink);
+  background: #f7f6f2;
+}}
+.sim-btn-role {{
+  font-size: 10px;
+  font-weight: 700;
+  color: #777;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}}
+.sim-btn-name {{
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}}
+.sim-btn-dest {{
+  font-size: 10.5px;
+  color: var(--terracotta, #c85a32);
+}}
+
+/* Divider */
+.login-divider {{
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 22px 0 18px;
+  color: #888;
+  font-size: 12px;
+}}
+.login-divider::before, .login-divider::after {{
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #e0ded9;
+}}
+.login-divider:not(:empty)::before {{
+  margin-right: 12px;
+}}
+.login-divider:not(:empty)::after {{
+  margin-left: 12px;
+}}
+
+/* Form inputs */
+.form-group {{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 14px;
+}}
+.form-label {{
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink);
+}}
+.form-input {{
+  width: 100%;
+  padding: 10px 13px;
+  border: 1px solid #d5d3ce;
+  background: #ffffff;
+  border-radius: 7px;
+  font-family: inherit;
+  font-size: 13.5px;
+  color: var(--ink);
+  transition: all 0.15s;
+}}
+.form-input:focus {{
+  outline: none;
+  border-color: var(--ink);
+  box-shadow: 0 0 0 2px rgba(13, 12, 34, 0.08);
+}}
+
+.submit-btn {{
+  width: 100%;
+  background: var(--ink);
+  color: #ffffff;
+  border: none;
+  padding: 13px 24px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.16s;
+  margin-top: 6px;
+}}
+.submit-btn:hover {{
+  background: #2b2a3a;
+  transform: translateY(-1px);
+}}
+
+.oauth-btn {{
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #cfccc6;
+  background: #ffffff;
+  color: var(--ink);
+  padding: 11px 20px;
+  border-radius: 999px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  width: 100%;
+  text-decoration: none;
+  margin-top: 8px;
+}}
+.oauth-btn:hover {{
+  background: #f7f6f2;
+  border-color: #999;
+}}
+
+.login-switch {{
+  text-align: center;
+  font-size: 13px;
+  color: #666;
+  margin-top: 20px;
+}}
+.login-switch a {{
+  color: var(--ink);
+  font-weight: 700;
+  text-decoration: underline;
+}}
+
+/* Alert box */
+.alert-msg {{
+  padding: 12px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  background: #edf7ed;
+  color: #1a6d1a;
+  border: 1px solid #c0e6c0;
+  display: none;
+  margin-bottom: 16px;
+}}
+</style>
+</head>
+<body class="antialiased">
+<main class="site-shell">
+{header_html}
+{feed_strip_html}
+
+<div class="login-wrap">
+  <div class="login-card">
+    
+    <div class="login-header">
+      <div class="eyebrow muted">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-round lucide-user-2"><circle cx="12" cy="8" r="5"></circle><path d="M20 21a8 8 0 0 0-16 0"></path></svg>
+        Monos Account
+      </div>
+      <h1>Đăng nhập <em>hồ sơ</em></h1>
+      <p>Quản trị tác phẩm, mở quyền kiểm duyệt và kết nối mạng lưới ngành nội thất.</p>
+    </div>
+
+    <!-- Quick Simulator Box for 6 User Types -->
+    <div class="sim-section">
+      <div class="sim-header">
+        <div class="sim-title">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+          Giả lập đăng nhập nhanh (6 Loại tài khoản)
+        </div>
+        <span class="sim-hint">Bấm để đăng nhập ngay</span>
+      </div>
+
+      <div class="sim-grid">
+        <!-- 1. Designer cá nhân -->
+        <button type="button" class="sim-btn" onclick="quickLogin('designer_ind', 'Huỳnh Lê Phương Uyên (Designer)', 'designer@monos.vn', '/designers/huynh-le-phuong-uyen')">
+          <span class="sim-btn-role">A. Designer cá nhân</span>
+          <span class="sim-btn-name">HL. Phương Uyên</span>
+          <span class="sim-btn-dest">Xem hồ sơ &rarr;</span>
+        </button>
+
+        <!-- 2. Studio thiết kế -->
+        <button type="button" class="sim-btn" onclick="quickLogin('designer_stu', 'F-Studio (Design Collective)', 'contact@f-studio.vn', '/designers/tran-thao-nhien')">
+          <span class="sim-btn-role">B. Studio thiết kế</span>
+          <span class="sim-btn-name">F-Studio</span>
+          <span class="sim-btn-dest">Xem quyền hạn &rarr;</span>
+        </button>
+
+        <!-- 3. Nhà máy sản xuất -->
+        <button type="button" class="sim-btn" onclick="quickLogin('factory', 'Tân Thành Furniture (Nhà máy)', 'factory@tanthanh.vn', '/factories')">
+          <span class="sim-btn-role">Nhà máy / Xưởng</span>
+          <span class="sim-btn-name">Gỗ Tân Thành</span>
+          <span class="sim-btn-dest">Hồ sơ xưởng &rarr;</span>
+        </button>
+
+        <!-- 4. Thương hiệu Brand -->
+        <button type="button" class="sim-btn" onclick="quickLogin('brand', 'B+ Furniture (Thương hiệu)', 'brand@bplus.vn', '/brands')">
+          <span class="sim-btn-role">Thương hiệu</span>
+          <span class="sim-btn-name">B+ Furniture</span>
+          <span class="sim-btn-dest">BST thương mại &rarr;</span>
+        </button>
+
+        <!-- 5. Nhà cung cấp vật liệu -->
+        <button type="button" class="sim-btn" onclick="quickLogin('material', 'TAVICO Timber (Nhà cung ứng)', 'supplier@tavico.vn', '/materials')">
+          <span class="sim-btn-role">Nhà cung ứng vật liệu</span>
+          <span class="sim-btn-name">TAVICO Timber</span>
+          <span class="sim-btn-dest">Thư viện vật liệu &rarr;</span>
+        </button>
+
+        <!-- 6. Người yêu đồ vật / Khách hàng -->
+        <button type="button" class="sim-btn" onclick="quickLogin('collector', 'Hoàng Minh Tuấn (Người yêu đồ vật)', 'customer@monos.vn', '/feed')">
+          <span class="sim-btn-role">Người yêu đồ vật</span>
+          <span class="sim-btn-name">Hoàng Minh Tuấn</span>
+          <span class="sim-btn-dest">Mở Monos Feed &rarr;</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="loginAlert" class="alert-msg"></div>
+
+    <!-- Manual Login Form -->
+    <form class="form-grid" id="loginForm" onsubmit="handleManualLogin(event)">
+      <div class="form-group">
+        <label class="form-label" for="l-email">Email hoặc Tên tài khoản</label>
+        <input type="text" id="l-email" class="form-input" placeholder="designer@monos.vn" required />
+      </div>
+
+      <div class="form-group">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <label class="form-label" for="l-password">Mật khẩu</label>
+          <a href="#" style="font-size:11.5px; color:#666; text-decoration:none;">Quên mật khẩu?</a>
+        </div>
+        <input type="password" id="l-password" class="form-input" placeholder="••••••••" required />
+      </div>
+
+      <button type="submit" class="submit-btn">
+        <span>Đăng nhập tài khoản</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg>
+      </button>
+
+      <div class="login-divider">HOẶC</div>
+
+      <a class="oauth-btn" href="/signin-with-chatgpt?return_to=%2Flogin">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"></path></svg>
+        Tiếp tục với ChatGPT
+      </a>
+
+      <div class="login-switch">
+        Chưa có tài khoản trên Monos? <a href="/signup">Đăng ký hồ sơ mới</a>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+{footer_html}
+</main>
+
+<script>
+// Mock Login Session in LocalStorage
+function quickLogin(roleKey, roleName, email, redirectUrl) {{
+  document.getElementById('l-email').value = email;
+  document.getElementById('l-password').value = '12345678';
+  
+  const alert = document.getElementById('loginAlert');
+  alert.style.display = 'block';
+  alert.innerHTML = `Đang giả lập phiên đăng nhập cho <strong>${{roleName}}</strong>...`;
+
+  try {{
+    localStorage.setItem('monos_current_user', JSON.stringify({{
+      role: roleKey,
+      name: roleName,
+      email: email,
+      isLoggedIn: true
+    }}));
+  }} catch (e) {{}}
+
+  setTimeout(() => {{
+    window.location.href = redirectUrl;
+  }}, 1100);
+}}
+
+function handleManualLogin(e) {{
+  e.preventDefault();
+  const alert = document.getElementById('loginAlert');
+  alert.style.display = 'block';
+  alert.innerText = 'Đăng nhập thành công! Đang chuyển hướng đến không gian làm việc...';
+
+  try {{
+    localStorage.setItem('monos_current_user', JSON.stringify({{
+      role: 'custom',
+      name: document.getElementById('l-email').value,
+      isLoggedIn: true
+    }}));
+  }} catch (e) {{}}
+
+  setTimeout(() => {{
+    window.location.href = '/designers';
+  }}, 1200);
+}}
+</script>
+</body>
+</html>
+'''
+
+with open('mirrored_pages/login.html', 'w', encoding='utf-8') as f:
+    f.write(html_login)
+
+print("Generated login.html with account simulator successfully!")

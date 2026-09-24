@@ -49,11 +49,16 @@ ROUTE_PAGES = {
     "/objects/thien-shrine": "objects__thien-shrine.html",
     "/objects/folio-collection": "objects__folio-collection.html",
     "/objects/the-gap-lamp": "objects__the-gap-lamp.html",
+    "/objects/the-archive-no-07": "objects__the-archive-no-07.html",
     "/designers/vo-tran-thanh-quang": "designers__vo-tran-thanh-quang.html",
     "/designers/duong-nhat-quang-dong": "designers__duong-nhat-quang-dong.html",
+    "/designers/thinh-cut-ngoac-space": "designers__thinh-cut-ngoac-space.html",
     "/designers/le-hoang-tuyet-ngoc": "designers__le-hoang-tuyet-ngoc.html",
     "/designers/alo-furniture-design": "designers__alo-furniture-design.html",
     "/designers/huynh-minh-dang": "designers__huynh-minh-dang.html",
+    "/designers/dao-son-tung": "designers__dao-son-tung.html",
+    "/designers/dao-son-lam": "designers__dao-son-lam.html",
+    "/objects/wd01-chair": "objects__wd01-chair.html",
     "/designers/nguyen-xuan-phong": "designers__nguyen-xuan-phong.html",
     "/designers/duy-khanh": "designers__duy-khanh.html",
     "/designers/nguyen-ngoc-chung": "designers__nguyen-ngoc-chung.html",
@@ -75,6 +80,7 @@ ROUTE_PAGES = {
     "/login": "login.html",
     "/profile": "profile.html",
     "/signup": "signup.html",
+    "/claim-profile": "claim-profile.html",
 }
 
 

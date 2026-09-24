@@ -254,6 +254,18 @@
   display: none;
   margin-bottom: 16px;
 }
+
+.sim-btn.selected {
+  border-color: var(--terracotta, #c85a32);
+  background: #fdf2ed;
+  box-shadow: 0 0 0 2px rgba(200, 90, 50, 0.15);
+}
+.alert-msg.alert-info {
+  background: #eef7ff;
+  border: 1px solid #cbe2f7;
+  color: #1a568c;
+}
+
 </style>
 </head>
 <body class="antialiased">
@@ -278,52 +290,52 @@
       <div class="sim-header">
         <div class="sim-title">
           <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-          Giả lập đăng nhập nhanh (6 Loại tài khoản)
+          Chọn hồ sơ mẫu để điền thông tin (6 Loại tài khoản)
         </div>
-        <span class="sim-hint">Bấm để đăng nhập ngay</span>
+        <span class="sim-hint">Bấm chọn hồ sơ để điền thông tin</span>
       </div>
 
       <div class="sim-grid">
         <!-- 1. Designer cá nhân -->
-        <button type="button" class="sim-btn" onclick="quickLogin('designer_ind', 'Huỳnh Lê Phương Uyên (Designer)', 'designer@monos.vn', '/profile?role=designer_ind')">
+        <button type="button" class="sim-btn" onclick="selectProfile('designer_ind', 'Huỳnh Lê Phương Uyên (Designer)', 'designer@monos.vn', '/profile?role=designer_ind', this)">
           <span class="sim-btn-role">A. Designer cá nhân</span>
           <span class="sim-btn-name">HL. Phương Uyên</span>
-          <span class="sim-btn-dest">Mở Profile cá nhân &rarr;</span>
+          <span class="sim-btn-dest">Chọn hồ sơ này &rarr;</span>
         </button>
 
         <!-- 2. Studio thiết kế -->
-        <button type="button" class="sim-btn" onclick="quickLogin('designer_stu', 'F-Studio (Design Collective)', 'contact@f-studio.vn', '/profile?role=designer_stu')">
+        <button type="button" class="sim-btn" onclick="selectProfile('designer_stu', 'F-Studio (Design Collective)', 'contact@f-studio.vn', '/profile?role=designer_stu', this)">
           <span class="sim-btn-role">B. Studio thiết kế</span>
           <span class="sim-btn-name">F-Studio</span>
-          <span class="sim-btn-dest">Mở Profile Studio &rarr;</span>
+          <span class="sim-btn-dest">Chọn hồ sơ này &rarr;</span>
         </button>
 
         <!-- 3. Nhà máy sản xuất -->
-        <button type="button" class="sim-btn" onclick="quickLogin('factory', 'Tân Thành Furniture (Nhà máy)', 'factory@tanthanh.vn', '/profile?role=factory')">
+        <button type="button" class="sim-btn" onclick="selectProfile('factory', 'Tân Thành Furniture (Nhà máy)', 'factory@tanthanh.vn', '/profile?role=factory', this)">
           <span class="sim-btn-role">Nhà máy / Xưởng</span>
           <span class="sim-btn-name">Gỗ Tân Thành</span>
-          <span class="sim-btn-dest">Mở Profile Xưởng &rarr;</span>
+          <span class="sim-btn-dest">Chọn hồ sơ này &rarr;</span>
         </button>
 
         <!-- 4. Thương hiệu Brand -->
-        <button type="button" class="sim-btn" onclick="quickLogin('brand', 'B+ Furniture (Thương hiệu)', 'brand@bplus.vn', '/profile?role=brand')">
+        <button type="button" class="sim-btn" onclick="selectProfile('brand', 'B+ Furniture (Thương hiệu)', 'brand@bplus.vn', '/profile?role=brand', this)">
           <span class="sim-btn-role">Thương hiệu</span>
           <span class="sim-btn-name">B+ Furniture</span>
-          <span class="sim-btn-dest">Mở Profile Brand &rarr;</span>
+          <span class="sim-btn-dest">Chọn hồ sơ này &rarr;</span>
         </button>
 
         <!-- 5. Nhà cung cấp vật liệu -->
-        <button type="button" class="sim-btn" onclick="quickLogin('material', 'TAVICO Timber (Nhà cung ứng)', 'supplier@tavico.vn', '/profile?role=material')">
+        <button type="button" class="sim-btn" onclick="selectProfile('material', 'TAVICO Timber (Nhà cung ứng)', 'supplier@tavico.vn', '/profile?role=material', this)">
           <span class="sim-btn-role">Nhà cung ứng vật liệu</span>
           <span class="sim-btn-name">TAVICO Timber</span>
-          <span class="sim-btn-dest">Mở Profile Vật liệu &rarr;</span>
+          <span class="sim-btn-dest">Chọn hồ sơ này &rarr;</span>
         </button>
 
         <!-- 6. Người yêu đồ vật / Khách hàng -->
-        <button type="button" class="sim-btn" onclick="quickLogin('collector', 'Hoàng Minh Tuấn (Người yêu đồ vật)', 'customer@monos.vn', '/profile?role=collector')">
+        <button type="button" class="sim-btn" onclick="selectProfile('collector', 'Hoàng Minh Tuấn (Người yêu đồ vật)', 'customer@monos.vn', '/profile?role=collector', this)">
           <span class="sim-btn-role">Người yêu đồ vật</span>
           <span class="sim-btn-name">Hoàng Minh Tuấn</span>
-          <span class="sim-btn-dest">Mở Profile cá nhân &rarr;</span>
+          <span class="sim-btn-dest">Chọn hồ sơ này &rarr;</span>
         </button>
       </div>
     </div>
@@ -369,46 +381,85 @@
 </main>
 
 <script>
-// Mock Login Session in LocalStorage
-function quickLogin(roleKey, roleName, email, redirectUrl) {
+let selectedProfile = null;
+
+function selectProfile(roleKey, roleName, email, destUrl, btnElem) {
+  selectedProfile = { roleKey, roleName, email, destUrl };
+  
+  // Điền thông tin vào form đăng nhập
   document.getElementById('l-email').value = email;
   document.getElementById('l-password').value = '12345678';
   
+  // Đánh dấu nút đang được chọn
+  document.querySelectorAll('.sim-btn').forEach(b => b.classList.remove('selected'));
+  if (btnElem) btnElem.classList.add('selected');
+  
+  // Hiển thị thông báo hướng dẫn, TUYỆT ĐỐI KHÔNG TỰ ĐỘNG CHUYỂN TRANG / KHÔNG TỰ ĐỘNG SUBMIT
   const alert = document.getElementById('loginAlert');
   alert.style.display = 'block';
-  alert.innerHTML = `Đang giả lập phiên đăng nhập cho <strong>${roleName}</strong>...`;
-
-  try {
-    localStorage.setItem('monos_current_user', JSON.stringify({
-      role: roleKey,
-      name: roleName,
-      email: email,
-      isLoggedIn: true
-    }));
-  } catch (e) {}
-
-  setTimeout(() => {
-    window.location.href = redirectUrl;
-  }, 1100);
+  alert.className = 'alert-msg alert-info';
+  alert.innerHTML = `Đã chọn hồ sơ: <strong>${roleName}</strong>. Vui lòng bấm nút <strong>"Đăng nhập tài khoản"</strong> bên dưới để hoàn tất.`;
 }
 
 function handleManualLogin(e) {
   e.preventDefault();
+  
+  const emailInput = document.getElementById('l-email').value.trim();
+  const passInput = document.getElementById('l-password').value;
+  
+  if (!emailInput) {
+    const alert = document.getElementById('loginAlert');
+    alert.style.display = 'block';
+    alert.className = 'alert-msg';
+    alert.innerText = 'Vui lòng nhập email hoặc chọn một hồ sơ mẫu.';
+    return;
+  }
+  
+  let targetRole = 'custom';
+  let targetName = emailInput;
+  let targetEmail = emailInput;
+  let targetUrl = '/profile';
+  
+  if (selectedProfile && selectedProfile.email === emailInput) {
+    targetRole = selectedProfile.roleKey;
+    targetName = selectedProfile.roleName;
+    targetUrl = selectedProfile.destUrl;
+  } else {
+    // Bản đồ tài khoản chuẩn
+    const map = {
+      'designer@monos.vn': { role: 'designer_ind', name: 'Huỳnh Lê Phương Uyên (Designer)', url: '/profile?role=designer_ind' },
+      'contact@f-studio.vn': { role: 'designer_stu', name: 'F-Studio (Design Collective)', url: '/profile?role=designer_stu' },
+      'factory@tanthanh.vn': { role: 'factory', name: 'Tân Thành Furniture (Nhà máy)', url: '/profile?role=factory' },
+      'brand@bplus.vn': { role: 'brand', name: 'B+ Furniture (Thương hiệu)', url: '/profile?role=brand' },
+      'supplier@tavico.vn': { role: 'material', name: 'TAVICO Timber (Nhà cung ứng)', url: '/profile?role=material' },
+      'customer@monos.vn': { role: 'collector', name: 'Hoàng Minh Tuấn (Người yêu đồ vật)', url: '/profile?role=collector' }
+    };
+    if (map[emailInput]) {
+      targetRole = map[emailInput].role;
+      targetName = map[emailInput].name;
+      targetUrl = map[emailInput].url;
+    }
+  }
+  
   const alert = document.getElementById('loginAlert');
   alert.style.display = 'block';
-  alert.innerText = 'Đăng nhập thành công! Đang chuyển hướng đến không gian làm việc...';
+  alert.className = 'alert-msg';
+  alert.innerHTML = `Đăng nhập thành công! Đang chuyển hướng đến không gian làm việc...`;
 
   try {
     localStorage.setItem('monos_current_user', JSON.stringify({
-      role: 'custom',
-      name: document.getElementById('l-email').value,
+      role: targetRole,
+      authVersion: 2,
+      authSource: "manual-login",
+      name: targetName,
+      email: targetEmail,
       isLoggedIn: true
     }));
-  } catch (e) {}
+  } catch (err) {}
 
   setTimeout(() => {
-    window.location.href = '/designers';
-  }, 1200);
+    window.location.href = targetUrl;
+  }, 900);
 }
 </script>
 
@@ -424,7 +475,7 @@ function handleManualLogin(e) {
       var signupBtn = container.querySelector('.submit-button.header-submit');
       var userBox = container.querySelector('.user-header-profile');
       
-      if (u && u.name) {
+      if (u && u.name && u.isLoggedIn === true && u.authVersion === 2 && u.role) {
         if (loginLink) loginLink.style.display = 'none';
         if (signupBtn) signupBtn.style.display = 'none';
         
@@ -460,5 +511,99 @@ function handleManualLogin(e) {
   window.addEventListener('storage', syncAuthHeader);
 })();
 </script>
+
+<!-- Global Search Modal -->
+<div id="monosSearchModal" style="display:none; position:fixed; inset:0; z-index:99999; background:rgba(0,0,0,0.65); backdrop-filter:blur(6px); align-items:flex-start; justify-content:center; padding:80px 16px 20px;">
+  <div style="background:#ffffff; border-radius:14px; max-width:640px; width:100%; box-shadow:0 12px 40px rgba(0,0,0,0.25); border-top:4px solid var(--terracotta,#c85a32); overflow:hidden;">
+    <div style="padding:16px 20px; border-bottom:1px solid var(--line); display:flex; align-items:center; gap:12px;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--terracotta,#c85a32);"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+      <input type="text" id="monosSearchInput" placeholder="Tìm kiếm tác giả, đồ vật, vật liệu, xưởng mộc..." style="border:none; outline:none; width:100%; font-size:16px; font-family:inherit;" oninput="runMonosSearch()" />
+      <button type="button" onclick="closeMonosSearch()" style="border:none; background:none; font-size:22px; cursor:pointer; color:#888;">&times;</button>
+    </div>
+    <div id="monosSearchResults" style="max-height:360px; overflow-y:auto; padding:12px 16px;">
+      <div style="font-size:12px; color:#888; padding:8px 6px;">Gợi ý: Nhập tên tác giả (Phương Uyên, Thảo Nhiên...), đồ vật (Hoa Muối, Mangthit, Hoa Gốm...), vật liệu (Bần nén, Gỗ...)</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const MONOS_SEARCH_DATA = [{"title":"WD01 Chair","type":"Đồ vật","desc":"Ghế gỗ ghép mộng của Đào Sơn Tùng và Đào Sơn Lâm","url":"/objects/wd01-chair"},{"title":"Đào Sơn Tùng","type":"Designer","desc":"Đồng tác giả WD01 Chair","url":"/designers/dao-son-tung"},{"title":"Đào Sơn Lâm","type":"Designer","desc":"Đồng tác giả WD01 Chair","url":"/designers/dao-son-lam"},{"title": "Bàn Hoa Muối (Hoa Muối Table)", "type": "Đồ vật", "desc": "Bàn Module gỗ tự nhiên và kính do Huỳnh Lê Phương Uyên thiết kế", "url": "/objects/hoa-muoi-table"}, {"title": "Huỳnh Lê Phương Uyên", "type": "Designer", "desc": "Tác giả Bàn Hoa Muối - Open Award HMA 2026", "url": "/designers/huynh-le-phuong-uyen"}, {"title": "Bàn Console Mangthit", "type": "Đồ vật", "desc": "Bàn console lấy cảm hứng từ lò gạch Măng Thít, sắc đỏ nung", "url": "/objects/ban-mangthit"}, {"title": "Trần Thảo Nhiên", "type": "Designer", "desc": "Lead Designer tại F-Studio, tác giả Bàn Mangthit", "url": "/designers/tran-thao-nhien"}, {"title": "Nhong Nhong (Đa năng)", "type": "Đồ vật", "desc": "Ghế bập bênh kiêm bàn học và ghế stool cho trẻ nhỏ", "url": "/objects/nhong-nhong"}, {"title": "Nguyễn Ngọc Chung & Nguyễn Cẩm Châu", "type": "Designers", "desc": "Tác giả bộ tác phẩm Nhong Nhong - HMA 2026", "url": "/designers/nguyen-ngoc-chung-nguyen-cam-chau"}, {"title": "Bàn Kiệu (Palanquin Table)", "type": "Đồ vật", "desc": "Bàn ăn lấy cảm hứng từ trò chơi khiêng kiệu dân gian", "url": "/objects/ban-kieu"}, {"title": "Dragonfly Glow", "type": "Đồ vật", "desc": "Đèn điêu khắc lấy cảm hứng từ ánh hoàng hôn và cánh chuồn chuồn", "url": "/objects/dragonfly-glow"}, {"title": "Ngô Duy Khánh", "type": "Designer", "desc": "Tác giả Bàn Kiệu & Dragonfly Glow", "url": "/designers/duy-khanh"}, {"title": "Lũy Module", "type": "Đồ vật", "desc": "Giải pháp lưu trữ thông minh mở lấy cảm hứng từ lũy tre Việt Nam", "url": "/objects/luy-module"}, {"title": "Huỳnh Minh Đăng", "type": "Designer", "desc": "Tác giả Lũy Module - Prototype bởi First Maker", "url": "/designers/huynh-minh-dang"}, {"title": "Hoa Gốm", "type": "Đồ vật", "desc": "Ghế module đa năng lấy cảm hứng từ phơ gốm Bát Tràng và bần nén", "url": "/objects/hoa-gom"}, {"title": "Nguyễn Xuân Phong", "type": "Designer", "desc": "Designer của Hoa Gốm - 3+ năm học hỏi tại làng nghề Bát Tràng", "url": "/designers/nguyen-xuan-phong"}, {"title": "THIÊN SHRINE", "type": "Đồ vật", "desc": "Bàn thờ đương đại lấy cảm hứng từ địa chất núi rừng", "url": "/objects/thien-shrine"}, {"title": "Lê Hoàng Tuyết Ngọc", "type": "Designer", "desc": "Designer của THIÊN SHRINE - Hợp tác sản xuất ALO", "url": "/designers/le-hoang-tuyet-ngoc"}, {"title": "Bàn FOLIO", "type": "Đồ vật", "desc": "Bộ sưu tập bàn ăn và bàn trà đóng gói phẳng flat-pack", "url": "/objects/folio-collection"}, {"title": "Võ Trần Thanh Quang", "type": "Designer", "desc": "Tác giả FOLIO Collection - Sản xuất bởi Nguyễn Thanh", "url": "/designers/vo-tran-thanh-quang"}, {"title": "THE GAP LAMP", "type": "Đồ vật", "desc": "Đèn bàn gỗ Yakisugi thủ công chạm đục Naguri", "url": "/objects/the-gap-lamp"}, {"title": "Dương Nhật Quang Đông", "type": "Designer", "desc": "Tác giả THE GAP LAMP - HMA 2026", "url": "/designers/duy-khanh"}, {"title": "Ghế Cloudy (Cloudy Armchair)", "type": "Đồ vật", "desc": "Ghế thư giãn hình đám mây của thương hiệu B+ Furniture", "url": "/objects/cloudy"}, {"title": "B+ Furniture", "type": "Thương hiệu", "desc": "Thương hiệu nội thất phát hành ghế Cloudy", "url": "/brands/b-plus"}, {"title": "First Maker", "type": "Nhà máy / Xưởng", "desc": "Xưởng chế tác cơ cấu xoay và prototype Lũy Module", "url": "/factories"}, {"title": "Nêm Studio", "type": "Nhà máy / Xưởng", "desc": "Đơn vị thi công mẫu thử Hoa Gốm", "url": "/factories"}, {"title": "Công ty CP Gỗ Tân Thành", "type": "Nhà máy / Xưởng", "desc": "Nhà máy gia công mộc tinh xảo cho Bàn Hoa Muối & Nhong Nhong", "url": "/factories"}, {"title": "TAVICO Timber", "type": "Vật liệu", "desc": "Nhà cung cấp gỗ tự nhiên xẻ sấy tuyển chọn FSC", "url": "/materials"}, {"title": "Sơn Protego", "type": "Vật liệu", "desc": "Hệ sơn phủ an toàn và bảo vệ bề mặt gỗ tự nhiên", "url": "/materials"}, {"title": "Bần nén (Cork)", "type": "Vật liệu", "desc": "Vật liệu sinh thái thô mộc dùng trong ghế Hoa Gốm", "url": "/materials"}];
+
+function openMonosSearch() {
+  const modal = document.getElementById('monosSearchModal');
+  if (modal) {
+    modal.style.display = 'flex';
+    setTimeout(() => {
+      const inp = document.getElementById('monosSearchInput');
+      if (inp) { inp.value = ''; inp.focus(); runMonosSearch(); }
+    }, 50);
+  }
+}
+
+function closeMonosSearch() {
+  const modal = document.getElementById('monosSearchModal');
+  if (modal) modal.style.display = 'none';
+}
+
+function runMonosSearch() {
+  const q = document.getElementById('monosSearchInput').value.trim().toLowerCase();
+  const resBox = document.getElementById('monosSearchResults');
+  if (!resBox) return;
+
+  if (!q) {
+    let hot = '<div style="font-size:11.5px; font-weight:700; color:#888; margin-bottom:8px; text-transform:uppercase;">Truy cập nhanh phổ biến:</div><div style="display:flex; flex-direction:column; gap:6px;">';
+    MONOS_SEARCH_DATA.slice(0, 6).forEach(item => {
+      hot += `<a href="${item.url}" style="display:flex; justify-content:space-between; align-items:center; padding:8px 10px; border-radius:6px; background:#f9f8f4; text-decoration:none; color:inherit; font-size:13px;"><span style="font-weight:700;">${item.title}</span><span style="font-size:11px; color:var(--terracotta,#c85a32);">${item.type} &rarr;</span></a>`;
+    });
+    hot += '</div>';
+    resBox.innerHTML = hot;
+    return;
+  }
+
+  const matched = MONOS_SEARCH_DATA.filter(item => 
+    item.title.toLowerCase().includes(q) || 
+    item.type.toLowerCase().includes(q) || 
+    item.desc.toLowerCase().includes(q)
+  );
+
+  if (matched.length === 0) {
+    resBox.innerHTML = '<div style="padding:20px; text-align:center; color:#888; font-size:13px;">Không tìm thấy kết quả phù hợp với từ khóa này.</div>';
+    return;
+  }
+
+  let html = '<div style="display:flex; flex-direction:column; gap:6px;">';
+  matched.forEach(m => {
+    html += `<a href="${m.url}" style="display:flex; justify-content:space-between; align-items:center; padding:10px 12px; border-radius:8px; background:#f9f8f4; text-decoration:none; color:inherit; border:1px solid var(--line);">
+      <div>
+        <div style="font-size:13.5px; font-weight:800; color:var(--ink);">${m.title}</div>
+        <div style="font-size:11.5px; color:#666; margin-top:2px;">${m.desc}</div>
+      </div>
+      <span style="background:#fdece6; color:var(--terracotta,#c85a32); font-size:10.5px; font-weight:700; padding:3px 8px; border-radius:4px; margin-left:12px; flex-shrink:0;">${m.type}</span>
+    </a>`;
+  });
+  html += '</div>';
+  resBox.innerHTML = html;
+}
+
+// Bind keyboard shortcut Ctrl+K or Cmd+K
+document.addEventListener('keydown', (e) => {
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+    e.preventDefault();
+    openMonosSearch();
+  }
+  if (e.key === 'Escape') closeMonosSearch();
+});
+
+// Bind search-trigger buttons on page
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.search-trigger').forEach(btn => {
+    btn.onclick = (e) => {
+      e.preventDefault();
+      openMonosSearch();
+    };
+  });
+});
+</script>
+
 </body>
 </html>

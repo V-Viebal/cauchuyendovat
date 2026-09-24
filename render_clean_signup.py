@@ -1,0 +1,647 @@
+import re
+
+header_html = '''<header class="site-header"><a class="brand" href="/" aria-label="Monos, về trang chủ"><span class="logo-mark" aria-hidden="true"><span></span><span></span></span><span class="brand-word">MONOS</span></a><nav class="main-nav " aria-label="Điều hướng chính"><a class="nav-link " href="/stories">Câu chuyện đồ vật</a><a class="nav-link " href="/feed">Feed</a><div class="nav-dropdown is-active"><a class="nav-link nav-parent active" href="/network" aria-haspopup="true">Hành trình<span class="nav-caret" aria-hidden="true">⌄</span></a><div class="nav-submenu" aria-label="Hành trình — danh mục"><a class="nav-sublink active" href="/designers">Designer</a><a class="nav-sublink " href="/objects">Đồ vật</a><a class="nav-sublink " href="/factories">Nhà máy</a><a class="nav-sublink " href="/brands">Brand</a><a class="nav-sublink " href="/spaces">Không gian</a></div></div><div class="nav-dropdown "><a class="nav-link nav-parent " href="/materials" aria-haspopup="true">Thư viện<span class="nav-caret" aria-hidden="true">⌄</span></a><div class="nav-submenu" aria-label="Thư viện — danh mục"><a class="nav-sublink " href="/materials">Vật liệu</a></div></div><a class="nav-link " href="/provenance">Nguồn gốc</a></nav><div class="header-actions"><a class="icon-button search-trigger" href="/feed" aria-label="Mở Monos Feed"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-activity" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path></svg></a><a class="login-link" href="/login" style="font-size:13px;font-weight:600;color:var(--ink);margin-right:12px;text-decoration:none;">Đăng nhập</a><a class="submit-button header-submit" href="/signup">Đăng ký hồ sơ <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right" aria-hidden="true"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a><button class="icon-button menu-trigger" type="button" aria-label="Mở menu" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu" aria-hidden="true"><path d="M4 5h16"></path><path d="M4 12h16"></path><path d="M4 19h16"></path></svg></button></div></header>'''
+
+feed_strip_html = '''<div class="feed-strip is-compact" aria-label="Dòng hoạt động Monos"><a class="feed-strip-lead" href="/feed"><span class="feed-live-dot"></span><span>Monos Feed</span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right" aria-hidden="true"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a><div class="feed-strip-items"><div class="feed-strip-track"><a class="feed-strip-item" href="/feed#feed-ambie"><span>Object Profile / 012</span><strong>Dragonfly Glow vừa mở hồ sơ mới.</strong><small>vừa xong</small></a><a class="feed-strip-item" href="/feed#feed-cloudy"><span>Object Profile / 001</span><strong>Cloudy vừa mở thêm một mốc provenance.</strong><small>12 phút trước</small></a><a class="feed-strip-item" href="/feed#feed-factory"><span>Factory Directory</span><strong>F-Studio cập nhật năng lực chế tác bàn Console.</strong><small>38 phút trước</small></a><a class="feed-strip-item" href="/feed#feed-designer"><span>Designer Community</span><strong>Cộng đồng designer đã mở danh sách hồ sơ mới.</strong><small>vừa xong</small></a><a class="feed-strip-item" href="/feed#feed-material"><span>Material Intelligence</span><strong>Gỗ tự nhiên &amp; Kết cấu module.</strong><small>1 giờ trước</small></a><a class="feed-strip-item" href="/feed#feed-brief"><span>Open Brief</span><strong>Đang tìm partner cho một prototype nhỏ.</strong><small>Hôm qua</small></a></div></div><a class="feed-strip-open" href="/feed">Mở feed <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right" aria-hidden="true"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a></div>'''
+
+footer_html = '''<footer class="site-footer"><a class="footer-brand" href="/"><span class="logo-mark" aria-hidden="true"><span></span><span></span></span><span>MONOS</span></a><p>Stories of the things we live with.</p><div class="footer-links"><a href="/stories">Câu chuyện đồ vật</a><a href="/feed">Feed</a><a href="/network">Hành trình</a><a href="/designers">Designer</a><a href="/objects">Đồ vật</a><a href="/factories">Nhà máy</a><a href="/brands">Brand</a><a href="/spaces">Không gian</a><a href="/materials">Thư viện</a><a href="/materials">Vật liệu</a><a href="/provenance">Nguồn gốc</a></div><span class="footer-credit">© 2026 Monos / Issue 01</span></footer>'''
+
+html_content = f'''<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charSet="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="/_next/static/css/index.B8WgWaCR.css" data-rsc-css-href="/_next/static/css/index.B8WgWaCR.css" data-precedence="vite-rsc/importer-resources"/>
+<title>Đăng ký hồ sơ — Monos</title>
+<meta name="description" content="Đăng ký hồ sơ Designer, Studio, Nhà máy, Brand, Nhà cung ứng vật liệu hoặc Người yêu đồ vật."/>
+<link rel="shortcut icon" href="/favicon.svg"/>
+<link rel="icon" href="/favicon.svg"/>
+<style>
+/* Clean, harmonious signup container matching login.html */
+.signup-wrap {{
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+}}
+.signup-box {{
+  background: var(--white, #ffffff);
+  border-top: 4px solid var(--terracotta, #c85a32);
+  border-radius: 12px;
+  padding: 40px 44px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+  border-left: 1px solid #e7e5df;
+  border-right: 1px solid #e7e5df;
+  border-bottom: 1px solid #e7e5df;
+}}
+@media (max-width: 640px) {{
+  .signup-wrap {{
+    padding: 24px 14px 60px;
+  }}
+  .signup-box {{
+    padding: 24px 18px;
+  }}
+}}
+
+.signup-header {{
+  text-align: center;
+  margin-bottom: 32px;
+}}
+.signup-header .eyebrow {{
+  justify-content: center;
+  margin-bottom: 8px;
+}}
+.signup-header h1 {{
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: -0.025em;
+  margin: 0 0 8px 0;
+}}
+.signup-header h1 em {{
+  font-style: italic;
+  font-weight: 400;
+  color: var(--terracotta, #c85a32);
+}}
+.signup-header p {{
+  font-size: 13.5px;
+  color: #666;
+  max-width: 480px;
+  margin: 0 auto;
+  line-height: 1.45;
+}}
+
+/* Clean horizontal Role Selector Tabs */
+.role-tabs-label {{
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #888;
+  margin-bottom: 8px;
+  display: block;
+}}
+.role-tabs {{
+  display: flex;
+  background: #f0eee9;
+  padding: 4px;
+  border-radius: 9px;
+  gap: 3px;
+  margin-bottom: 16px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}}
+.role-tabs::-webkit-scrollbar {{
+  display: none;
+}}
+.role-tab {{
+  flex: 1;
+  min-width: fit-content;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #555;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.16s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}}
+.role-tab:hover {{
+  color: var(--ink);
+}}
+.role-tab.active {{
+  background: #ffffff;
+  color: var(--ink);
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}}
+
+/* Sub-toggle for Designer (A vs B) */
+.sub-designer-toggle {{
+  display: flex;
+  background: #f8f6f2;
+  border: 1px solid #e3e1db;
+  border-radius: 8px;
+  padding: 3px;
+  gap: 3px;
+  margin-bottom: 22px;
+}}
+.sub-btn {{
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  color: #666;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s;
+}}
+.sub-btn.active {{
+  background: #ffffff;
+  color: var(--terracotta, #c85a32);
+  font-weight: 700;
+  box-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.06);
+}}
+
+/* Studio 4 Powers Feature Card */
+.studio-powers-card {{
+  background: #faf8f5;
+  border: 1px solid #ede8e1;
+  border-left: 3px solid var(--terracotta, #c85a32);
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-bottom: 24px;
+}}
+.studio-powers-title {{
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}}
+.studio-powers-list {{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 16px;
+}}
+@media (max-width: 600px) {{
+  .studio-powers-list {{
+    grid-template-columns: 1fr;
+  }}
+}}
+.studio-power-item {{
+  font-size: 12px;
+  color: #444;
+  line-height: 1.4;
+}}
+.studio-power-item strong {{
+  color: var(--ink);
+  display: block;
+}}
+
+/* Form inputs & grid */
+.form-grid {{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}}
+.form-row {{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}}
+@media (max-width: 640px) {{
+  .form-row {{
+    grid-template-columns: 1fr;
+  }}
+}}
+.form-group {{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}}
+.form-label {{
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink);
+}}
+.form-label span.req {{
+  color: var(--terracotta, #c85a32);
+  margin-left: 2px;
+}}
+.form-input, .form-select, .form-textarea {{
+  width: 100%;
+  padding: 10px 13px;
+  border: 1px solid #d5d3ce;
+  background: #ffffff;
+  border-radius: 7px;
+  font-family: inherit;
+  font-size: 13.5px;
+  color: var(--ink);
+  transition: all 0.15s;
+}}
+.form-input:focus, .form-select:focus, .form-textarea:focus {{
+  outline: none;
+  border-color: var(--ink);
+  box-shadow: 0 0 0 2px rgba(13, 12, 34, 0.08);
+}}
+
+.submit-wrap {{
+  margin-top: 10px;
+}}
+.submit-btn {{
+  width: 100%;
+  background: var(--ink);
+  color: #ffffff;
+  border: none;
+  padding: 13px 24px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.16s;
+}}
+.submit-btn:hover {{
+  background: #2b2a3a;
+  transform: translateY(-1px);
+}}
+.login-switch {{
+  text-align: center;
+  font-size: 13px;
+  color: #666;
+  margin-top: 18px;
+}}
+.login-switch a {{
+  color: var(--ink);
+  font-weight: 700;
+  text-decoration: underline;
+}}
+
+/* Alert box */
+.alert-msg {{
+  padding: 12px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  background: #edf7ed;
+  color: #1a6d1a;
+  border: 1px solid #c0e6c0;
+  display: none;
+  margin-bottom: 16px;
+}}
+</style>
+</head>
+<body class="antialiased">
+<main class="site-shell">
+{header_html}
+{feed_strip_html}
+
+<div class="signup-wrap">
+  <div class="signup-box">
+    
+    <div class="signup-header">
+      <div class="eyebrow muted">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg>
+        Mạng lưới kết nối đồ vật Monos
+      </div>
+      <h1>Đăng ký <em>hồ sơ mới</em></h1>
+      <p id="roleDescriptionHeader">Khởi tạo định danh, bảo hộ bản quyền và kết nối chuỗi giá trị nội thất.</p>
+    </div>
+
+    <span class="role-tabs-label">Bước 1: Chọn vai trò của bạn</span>
+    <div class="role-tabs" role="tablist">
+      <button type="button" class="role-tab active" id="tab-designer" onclick="setCategory('designer')">
+        Thiết kế sáng tạo
+      </button>
+      <button type="button" class="role-tab" id="tab-factory" onclick="setCategory('factory')">
+        Xưởng / Nhà máy
+      </button>
+      <button type="button" class="role-tab" id="tab-brand" onclick="setCategory('brand')">
+        Thương hiệu
+      </button>
+      <button type="button" class="role-tab" id="tab-material" onclick="setCategory('material')">
+        Nhà cung cấp vật liệu
+      </button>
+      <button type="button" class="role-tab" id="tab-collector" onclick="setCategory('collector')">
+        Người yêu đồ vật
+      </button>
+    </div>
+
+    <!-- Sub-options for Thiết kế sáng tạo -->
+    <div id="subToggleWrapper" class="sub-designer-toggle">
+      <button type="button" class="sub-btn active" id="sub-btn-individual" onclick="setSubDesigner('individual')">
+        A. Cá nhân (Freelance / Independent)
+      </button>
+      <button type="button" class="sub-btn" id="sub-btn-studio" onclick="setSubDesigner('studio')">
+        B. Doanh nghiệp / Nhóm (Design Studio)
+      </button>
+    </div>
+
+    <!-- 4 Studio Powers Banner (shows only when Studio is selected) -->
+    <div id="studioPowersBox" class="studio-powers-card" style="display: none;">
+      <div class="studio-powers-title">
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m12 3 1.912 5.885h6.19l-5.01 3.64 1.913 5.885L12 14.77l-5.005 3.64 1.913-5.885-5.01-3.64h6.19z"></path></svg>
+        4 Quyền năng đặc quyền dành riêng cho Studio:
+      </div>
+      <div class="studio-powers-list">
+        <div class="studio-power-item">
+          <strong>1. Hồ sơ đại diện Studio:</strong>
+          Hiển thị Logo, triết lý thiết kế (Design Philosophy) và trọn bộ sưu tập.
+        </div>
+        <div class="studio-power-item">
+          <strong>2. Quản lý nhóm &amp; Gắn thẻ:</strong>
+          Mời thành viên (Lead Designer, 3D, R&amp;D) cùng quản trị và ghi công rõ ràng.
+        </div>
+        <div class="studio-power-item">
+          <strong>3. Đăng Open Brief:</strong>
+          Tìm xưởng mộc, kim loại làm mẫu thử (Prototype) trực tiếp trên Monos Feed.
+        </div>
+        <div class="studio-power-item">
+          <strong>4. Chứng nhận chuỗi 7 lớp:</strong>
+          Đứng tên B2B trong chuỗi kết nối: Studio &#8596; Vật liệu &#8596; Xưởng &#8596; Brand.
+        </div>
+      </div>
+    </div>
+
+    <div id="alertSuccess" class="alert-msg"></div>
+
+    <!-- Step 2: Dedicated Form Fields for chosen role -->
+    <form class="form-grid" id="mainSignupForm" onsubmit="submitSignup(event)">
+      <div id="formDynamicFields"></div>
+
+      <!-- General Account Credentials -->
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="f-email">Email công việc / đăng nhập <span class="req">*</span></label>
+          <input type="email" id="f-email" class="form-input" placeholder="name@domain.vn" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="f-pass">Mật khẩu khởi tạo <span class="req">*</span></label>
+          <input type="password" id="f-pass" class="form-input" placeholder="Tối thiểu 8 ký tự" required />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="f-loc">Khu vực / Tỉnh thành <span class="req">*</span></label>
+        <input type="text" id="f-loc" class="form-input" placeholder="Ví dụ: TP. Hồ Chí Minh · Việt Nam" required />
+      </div>
+
+      <div class="submit-wrap">
+        <button type="submit" class="submit-btn" id="btnSubmitText">
+          <span>Tạo hồ sơ chính thức</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg>
+        </button>
+      </div>
+
+      <div class="login-switch">
+        Đã có hồ sơ hoặc tài khoản? <a href="/login">Đăng nhập</a>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+{footer_html}
+</main>
+
+<script>
+let activeCategory = 'designer';
+let activeSubDesigner = 'individual';
+
+const formsConfig = {{
+  'designer-individual': {{
+    headerDesc: 'Dành cho nhà thiết kế độc lập khẳng định bản quyền ý tưởng và kết nối sản phẩm.',
+    submitLabel: 'Tạo hồ sơ Designer cá nhân',
+    fields: `
+      <div class="form-group">
+        <label class="form-label" for="in-name">Họ và tên tác giả <span class="req">*</span></label>
+        <input type="text" id="in-name" class="form-input" placeholder="Ví dụ: Huỳnh Lê Phương Uyên" required />
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="in-spec">Chuyên môn thiết kế chính <span class="req">*</span></label>
+          <select id="in-spec" class="form-select">
+            <option value="Furniture">Nội thất rời (Furniture / Seating)</option>
+            <option value="Table">Bàn (Dining Table / Console)</option>
+            <option value="Lighting">Đèn &amp; Điêu khắc ánh sáng</option>
+            <option value="Storage">Tủ kệ &amp; Module lưu trữ</option>
+            <option value="Multi">Nội thất đa năng / Kids</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="in-link">Link Portfolio / Behance</label>
+          <input type="url" id="in-link" class="form-input" placeholder="https://behance.net/..." />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="in-bio">Triết lý thiết kế / Giới thiệu tác giả <span class="req">*</span></label>
+        <textarea id="in-bio" rows="2" class="form-textarea" placeholder="Tóm tắt ngắn gọn phong cách tạo hình, giải thưởng hoặc câu chuyện sáng tác..." required></textarea>
+      </div>
+    `
+  }},
+  'designer-studio': {{
+    headerDesc: 'Dành cho văn phòng và nhóm sáng tạo quản trị danh mục tập thể và tìm kiếm đối tác gia công.',
+    submitLabel: 'Tạo hồ sơ Studio thiết kế',
+    fields: `
+      <div class="form-group">
+        <label class="form-label" for="st-name">Tên Studio / Văn phòng thiết kế <span class="req">*</span></label>
+        <input type="text" id="st-name" class="form-input" placeholder="Ví dụ: B+ Studio, F-Studio hoặc DB Design" required />
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="st-size">Quy mô nhóm</label>
+          <select id="st-size" class="form-select">
+            <option value="2-5">Nhóm 2 - 5 thành viên</option>
+            <option value="6-15">Studio 6 - 15 thành viên</option>
+            <option value="15+">Công ty trên 15 thành viên</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="st-web">Website Studio / Hồ sơ năng lực</label>
+          <input type="url" id="st-web" class="form-input" placeholder="https://studio.vn" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="st-spec">Các lĩnh vực chuyên sâu của Studio <span class="req">*</span></label>
+        <input type="text" id="st-spec" class="form-input" placeholder="Furniture, Lighting, Bespoke, Không gian..." required />
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="st-phil">Triết lý thiết kế chung (Design Philosophy) <span class="req">*</span></label>
+        <textarea id="st-phil" rows="2" class="form-textarea" placeholder="Tuyên ngôn sáng tạo và định hướng phát triển đồ vật của Studio..." required></textarea>
+      </div>
+    `
+  }},
+  'factory': {{
+    headerDesc: 'Dành cho nhà máy, xưởng mộc, cơ khí, may bọc giới thiệu năng lực chế tác mẫu thử và sản xuất.',
+    submitLabel: 'Tạo hồ sơ Xưởng / Nhà máy',
+    fields: `
+      <div class="form-group">
+        <label class="form-label" for="fa-name">Tên Nhà máy / Xưởng sản xuất <span class="req">*</span></label>
+        <input type="text" id="fa-name" class="form-input" placeholder="Ví dụ: Công ty CP Gỗ Tân Thành" required />
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="fa-type">Kỹ thuật &amp; Năng lực gia công chủ lực <span class="req">*</span></label>
+          <select id="fa-type" class="form-select">
+            <option value="wood_solid">Gỗ tự nhiên &amp; Uốn cong phức hợp</option>
+            <option value="wood_board">Gỗ công nghiệp &amp; Dán Veneer</option>
+            <option value="metal">Cơ khí kim loại &amp; Sơn tĩnh điện</option>
+            <option value="upholstery">May bọc nệm da &amp; nỉ thủ công</option>
+            <option value="all">Sản xuất tổng thể hoàn thiện</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="fa-serv">Dịch vụ ưu tiên nhận</label>
+          <select id="fa-serv" class="form-select">
+            <option value="proto">Làm mẫu thử (Prototype) &amp; Lô nhỏ (Small batch)</option>
+            <option value="mass">Gia công số lượng lớn theo đơn hàng</option>
+            <option value="bespoke">Bespoke dự án cao cấp đơn chiếc</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="fa-machinery">Công nghệ &amp; Máy móc nổi bật</label>
+        <input type="text" id="fa-machinery" class="form-input" placeholder="CNC 5 trục, buồng sơn sấy sạch, thợ may lành nghề..." />
+      </div>
+    `
+  }},
+  'brand': {{
+    headerDesc: 'Dành cho thương hiệu nội thất quản lý bản quyền thương mại và tìm kiếm thiết kế hợp tác.',
+    submitLabel: 'Tạo hồ sơ Thương hiệu',
+    fields: `
+      <div class="form-group">
+        <label class="form-label" for="br-name">Tên Thương hiệu / Brand <span class="req">*</span></label>
+        <input type="text" id="br-name" class="form-input" placeholder="Ví dụ: B+ Furniture Studio" required />
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="br-seg">Phân khúc sản phẩm <span class="req">*</span></label>
+          <select id="br-seg" class="form-select">
+            <option value="luxury">Cao cấp / Luxury</option>
+            <option value="contemporary">Đương đại / Contemporary</option>
+            <option value="contract">Dự án công trình / Contract</option>
+            <option value="retail">Bán lẻ phong cách sống</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="br-show">Kênh phân phối / Showroom</label>
+          <input type="text" id="br-show" class="form-input" placeholder="Showroom Hà Nội / TP.HCM / Online..." />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="br-goal">Nhu cầu kết nối chính</label>
+        <input type="text" id="br-goal" class="form-input" placeholder="Tìm bản vẽ của Designer độc lập, tìm xưởng gia công..." />
+      </div>
+    `
+  }},
+  'material': {{
+    headerDesc: 'Đưa mẫu nguyên vật liệu vào Thư viện Monos Material Library và liên kết với các đồ vật thực tế.',
+    submitLabel: 'Tạo hồ sơ Nhà cung cấp vật liệu',
+    fields: `
+      <div class="form-group">
+        <label class="form-label" for="mat-name">Tên Đơn vị cung ứng vật liệu <span class="req">*</span></label>
+        <input type="text" id="mat-name" class="form-input" placeholder="Ví dụ: TAVICO Timber, Protego Paint..." required />
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="mat-cat">Loại vật liệu cung ứng <span class="req">*</span></label>
+          <select id="mat-cat" class="form-select">
+            <option value="wood">Gỗ tự nhiên xẻ sấy, ván ép</option>
+            <option value="fabric">Vải nỉ, Bouclé, Da bò, Simili</option>
+            <option value="coating">Sơn phủ dầu lau mộc, PU, Sơn an toàn</option>
+            <option value="glass_stone">Kính kiến trúc, Đá tự nhiên</option>
+            <option value="hardware">Kim khí, phụ kiện liên kết</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="mat-cert">Tiêu chuẩn / Chứng chỉ</label>
+          <input type="text" id="mat-cert" class="form-input" placeholder="FSC, E0/E1, Chống cháy Martindale..." />
+        </div>
+      </div>
+    `
+  }},
+  'collector': {{
+    headerDesc: 'Lưu giữ những câu chuyện ý nghĩa, đóng góp kỷ niệm đời sống và kết nối với tác giả.',
+    submitLabel: 'Tạo tài khoản Người yêu đồ vật',
+    fields: `
+      <div class="form-group">
+        <label class="form-label" for="cl-name">Họ và tên của bạn <span class="req">*</span></label>
+        <input type="text" id="cl-name" class="form-input" placeholder="Ví dụ: Hoàng Minh Tuấn" required />
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="cl-fav">Mối quan tâm chính trên Monos</label>
+        <select id="cl-fav" class="form-select">
+          <option value="stories">Đọc và theo dõi những câu chuyện phía sau đồ vật</option>
+          <option value="collect">Sưu tầm và tìm mua các thiết kế độc bản</option>
+          <option value="connect">Tìm kiếm Designer &amp; Xưởng mộc cho tổ ấm của mình</option>
+        </select>
+      </div>
+    `
+  }}
+}};
+
+function renderForm() {{
+  const key = activeCategory === 'designer' ? `designer-${{activeSubDesigner}}` : activeCategory;
+  const cfg = formsConfig[key];
+  if (!cfg) return;
+
+  document.getElementById('roleDescriptionHeader').innerText = cfg.headerDesc;
+  document.getElementById('btnSubmitText').querySelector('span').innerText = cfg.submitLabel;
+  document.getElementById('formDynamicFields').innerHTML = cfg.fields;
+
+  // Toggle sub-bar visibility
+  const subBar = document.getElementById('subToggleWrapper');
+  const studioBox = document.getElementById('studioPowersBox');
+  if (activeCategory === 'designer') {{
+    subBar.style.display = 'flex';
+    studioBox.style.display = activeSubDesigner === 'studio' ? 'block' : 'none';
+  }} else {{
+    subBar.style.display = 'none';
+    studioBox.style.display = 'none';
+  }}
+}}
+
+function setCategory(cat) {{
+  activeCategory = cat;
+  document.querySelectorAll('.role-tab').forEach(t => t.classList.remove('active'));
+  const activeBtn = document.getElementById(`tab-${{cat}}`);
+  if (activeBtn) activeBtn.classList.add('active');
+  renderForm();
+}}
+
+function setSubDesigner(sub) {{
+  activeSubDesigner = sub;
+  document.getElementById('sub-btn-individual').classList.toggle('active', sub === 'individual');
+  document.getElementById('sub-btn-studio').classList.toggle('active', sub === 'studio');
+  renderForm();
+}}
+
+function submitSignup(e) {{
+  e.preventDefault();
+  const alert = document.getElementById('alertSuccess');
+  alert.style.display = 'block';
+  alert.innerText = 'Đăng ký hồ sơ thành công! Đang chuyển hướng...';
+
+  setTimeout(() => {{
+    if (activeCategory === 'designer') {{
+      window.location.href = '/designers';
+    }} else if (activeCategory === 'factory') {{
+      window.location.href = '/factories';
+    }} else if (activeCategory === 'brand') {{
+      window.location.href = '/brands';
+    }} else if (activeCategory === 'material') {{
+      window.location.href = '/materials';
+    }} else {{
+      window.location.href = '/feed';
+    }}
+  }}, 1400);
+}}
+
+// Initial load
+renderForm();
+</script>
+</body>
+</html>
+'''
+
+with open('mirrored_pages/signup.html', 'w', encoding='utf-8') as f:
+    f.write(html_content)
+
+print("Redesigned signup.html with clean layout successfully!")
